@@ -1,0 +1,431 @@
+@prefix bf:    <http://id.loc.gov/ontologies/bibframe/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix tbr:   <http://purl.bdrc.io/ontology/toberemoved/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix PersonEventShapes: <http://purl.bdrc.io/shapes/core/PersonEventShapes/> .
+@prefix PersonShapes: <http://purl.bdrc.io/shapes/core/PersonShapes/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix EventShapes: <http://purl.bdrc.io/shapes/core/EventShapes/> .
+@prefix CoreShapes: <http://purl.bdrc.io/shapes/core/CoreShapes/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bda:   <http://purl.bdrc.io/admin.data/> .
+@prefix cc:    <http://creativecommons.org/ns#> .
+@prefix bdd:   <http://purl.bdrc.io/data/> .
+@prefix bdg:   <http://purl.bdrc.io/graph/> .
+@prefix tosh:  <http://topbraid.org/tosh#> .
+@prefix adm:   <http://purl.bdrc.io/ontology/admin/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix iiif2: <http://iiif.io/api/presentation/2#> .
+@prefix iiif3: <http://iiif.io/api/presentation/3#> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix swa:   <http://topbraid.org/swa#> .
+@prefix bdsa:  <http://purl.bdrc.io/ontology/shapes/adm/> .
+@prefix lcsh:  <http://id.loc.gov/authorities/subjects/> .
+
+bds:PersonShape-personStudentOf
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more teachers."@en ;
+        sh:path         bdo:personStudentOf .
+
+bds:PersonShape-personName
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have one or more names."@en ;
+        sh:minCount     1 ;
+        sh:node         bds:PersonNameShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:path         bdo:personName .
+
+bds:PersonShape-personTeacherOf
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more students."@en ;
+        sh:path         bdo:personTeacherOf .
+
+bds:PersonShape-genderMale
+        a            sh:PropertyShape ;
+        sh:hasValue  bdr:GenderMale ;
+        sh:maxCount  1 ;
+        sh:minCount  1 ;
+        sh:path      bdo:gender .
+
+bds:PersonShape-hasGranddaughter
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more granddaughters."@en ;
+        sh:inversePath  bdo:hasGrandParent ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasGranddaughter .
+
+bds:PersonShape-hasSibling
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more siblings."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:path         bdo:hasSibling .
+
+bds:PersonShape-hasGrandson
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more grandsons."@en ;
+        sh:inversePath  bdo:hasGrandParent ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasGrandson .
+
+bds:PersonShape-hasBrother
+        a               sh:PropertyShape ;
+        sh:description  "This Person may have zero or more brothers."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasBrother .
+
+bds:PersonShape-hasOlderBrother
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more older brothers."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasOlderBrother .
+
+PersonShapes:  a         owl:Ontology ;
+        owl:imports      PersonEventShapes: , CoreShapes: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "SHACL constraints for Person" .
+
+bds:PersonShape-hasHusband
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have a husband."@en ;
+        sh:inversePath  bdo:hasWife ;
+        sh:name         "has husband"@en ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasHusband .
+
+bds:PersonShape-hasGrandParent
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero upto 4 grandparents."@en ;
+        sh:inversePath  bdo:hasGrandChild ;
+        sh:maxCount     4 ;
+        sh:path         bdo:hasGrandParent .
+
+bds:PersonShape-hasSon
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more sons."@en ;
+        sh:inversePath  bdo:hasParent ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasSon .
+
+bds:PersonShape-gender
+        a               sh:PropertyShape ;
+        sh:class        bdo:Gender ;
+        sh:description  "this Person may have at most one Gender or none if not known."@en ;
+        sh:group        bds:IdentityPropertyGroup ;
+        sh:maxCount     1 ;
+        sh:path         bdo:gender .
+
+bds:PersonShape-hasSister
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more sisters."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasSister .
+
+bds:PersonShape-genderFemale
+        a            sh:PropertyShape ;
+        sh:hasValue  bdr:GenderFemale ;
+        sh:maxCount  1 ;
+        sh:minCount  1 ;
+        sh:path      bdo:gender .
+
+bds:PersonShape-hasCousin
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more cousins."@en ;
+        sh:inversePath  bdo:hasCousin ;
+        sh:path         bdo:hasCousin .
+
+bds:PersonShape-hasParent
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have at most two parents."@en ;
+        sh:inversePath  bdo:hasChild ;
+        sh:maxCount     2 ;
+        sh:path         bdo:hasParent .
+
+bds:PersonShape-hasGrandfather
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have at most two Grandfathers."@en ;
+        sh:inversePath  bdo:hasGrandChild ;
+        sh:maxCount     2 ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasGrandfather .
+
+bds:PersonShape-hasGrandChild
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more grandchildren."@en ;
+        sh:inversePath  bdo:hasGrandParent ;
+        sh:order        "3"^^xsd:decimal ;
+        sh:path         bdo:hasGrandChild .
+
+bds:PersonShape-hasOlderSister
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more older sisters."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:name         "has older sister"@en ;
+        sh:order        "2"^^xsd:decimal ;
+        sh:path         bdo:hasOlderSister .
+
+bds:PersonNameShape-personNameLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "this Person has a name given by the label."@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdfs:label .
+
+bds:PersonShape-hasGrandmother
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have at most two Grandmothers."@en ;
+        sh:inversePath  bdo:hasGrandChild ;
+        sh:maxCount     2 ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasGrandmother .
+
+bds:PersonNameShape-personNameType
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonName ;
+        sh:description  "this Person has a name of the given type."@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdf:type .
+
+bds:PersonShape-kinWith
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more kin."@en ;
+        sh:inversePath  bdo:kinWith ;
+        sh:path         bdo:kinWith .
+
+bds:PersonShape-hasYoungerBrother
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more younger brothers."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasYoungerBrother .
+
+bds:PersonShape-hasWife
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have at most one wife."@en ;
+        sh:inversePath  bdo:hasHusband ;
+        sh:maxCount     1 ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasWife .
+
+bds:PersonShape-hasSpouse
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have at most one spouse."@en ;
+        sh:inversePath  bdo:hasSpouse ;
+        sh:maxCount     1 ;
+        sh:path         bdo:hasSpouse .
+
+bds:PersonShape-hasDaughter
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more daughters."@en ;
+        sh:inversePath  bdo:hasParent ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasDaughter .
+
+bdo:Person  bds:rootShape  bds:PersonShape .
+
+bds:PersonNameShape  a  sh:NodeShape ;
+        rdfs:label      "Person Name Shape"@en ;
+        sh:property     bds:PersonNameShape-personNameType , bds:PersonNameShape-personNameLabel ;
+        sh:targetClass  bdo:PersonName .
+
+bds:PersonShape-hasMother
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have at most one mother."@en ;
+        sh:inversePath  bdo:hasChild ;
+        sh:maxCount     1 ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasMother .
+
+bds:MaleShape  a     sh:NodeShape ;
+        rdfs:label   "Male Shape"@en ;
+        sh:property  bds:PersonShape-genderMale .
+
+bds:PersonShape-hasFather
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have a father."@en ;
+        sh:inversePath  bdo:hasChild ;
+        sh:maxCount     1 ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasFather .
+
+bds:PersonShape  a      sh:NodeShape ;
+        rdfs:label      "Person Shape"@en ;
+        adm:graphId     bdg:PersonShapes ;
+        sh:property     bds:PersonShape-hasBrother , bds:PersonShape-hasSon , bds:PersonShape-hasMother , bds:PersonShape-hasCousin , bds:PersonShape-personStudentOf , bds:PersonShape-gender , bds:PersonShape-kinWith , bds:PersonShape-hasGrandfather , bds:PersonShape-hasGrandmother , bds:PersonShape-hasGranddaughter , bds:PersonShape-hasParent , bds:PersonShape-hasGrandParent , bds:PersonShape-personTeacherOf , bds:PersonShape-hasOlderBrother , bds:PersonShape-hasGrandson , bds:PersonShape-hasSpouse , bds:PersonShape-hasFather , bds:PersonShape-hasSister , bds:PersonShape-hasOlderSister , bds:PersonShape-hasGrandChild , bds:PersonShape-hasYoungerSister , bds:PersonShape-hasYoungerBrother , bds:PersonShape-hasDaughter , bds:PersonShape-hasSibling , bds:PersonShape-personName ;
+        sh:targetClass  bdo:Person .
+
+bds:PersonShape-hasYoungerSister
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have zero or more younger sisters."@en ;
+        sh:inversePath  bdo:hasSibling ;
+        sh:node         bds:FemaleShape ;
+        sh:path         bdo:hasYoungerSister .
+
+bds:FemaleShape  a   sh:NodeShape ;
+        rdfs:label   "Female Shape"@en ;
+        sh:property  bds:PersonShape-genderFemale .
+
+bds:PersonEventShapes
+        a               sh:NodeShape ;
+        rdfs:label      "Person Event Shape"@en ;
+        sh:property     bds:PersonEventShape-personEventType , bds:PersonEventShape-personEventRole , bds:PersonEventShape-personEventCorporation ;
+        sh:targetClass  bdo:PersonEvent .
+
+PersonEventShapes:  a    owl:Ontology ;
+        owl:imports      EventShapes: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "Initial SHACL constraints for Person Events" .
+
+bds:EventShape-personEventRole
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:Role ;
+        sh:maxCount  1 ;
+        sh:name      "role associated with the event"@en ;
+        sh:path      bdo:personEventRole .
+
+bds:EventShape-personEventType
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:PersonEventType ;
+        sh:maxCount  1 ;
+        sh:minCount  1 ;
+        sh:name      "role associated with the event"@en ;
+        sh:path      bdo:eventType .
+
+bds:EventShape-personEventCorporation
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:Corporation ;
+        sh:name      "corporation associated with the event"@en ;
+        sh:path      bdo:personEventCorporation .
+
+bds:LabelShape  a       sh:NodeShape ;
+        rdfs:label      "Label Shape"@en ;
+        sh:property     bds:LabelShape-hasTranslation ;
+        sh:targetClass  bdo:Label .
+
+bds:LabelShape-hasTranslation
+        a               sh:PropertyShape ;
+        sh:class        bdo:Label ;
+        sh:description  "this Label may have zero or more tanslations"@en ;
+        sh:inversePath  bdo:translationOf ;
+        sh:minCount     0 ;
+        sh:name         "label has translation"@en ;
+        sh:path         bdo:hasTranslation .
+
+CoreShapes:  a           owl:Ontology ;
+        owl:imports      bdo: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "Initial SHACL constraints" .
+
+bds:rootShape  a     owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   sh:NodeShape .
+
+bds:uiShape  a       owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   sh:NodeShape .
+
+bds:EntityShape-skos_prefLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "require unique language from among the listed choices"@en ;
+        sh:languageIn   ( "en" "zh" "bo" "bo-x-ewts" ) ;
+        sh:minCount     1 ;
+        sh:name         "pref label"@en ;
+        sh:order        "1"^^xsd:decimal ;
+        sh:path         skos:prefLabel ;
+        sh:uniqueLang   true .
+
+bds:EntityShape  a      sh:NodeShape ;
+        rdfs:label      "Entity shape"@en ;
+        sh:property     bds:EntityShape-skos_prefLabel ;
+        sh:targetClass  bdo:Entity .
+
+EventShapes:  a          owl:Ontology ;
+        owl:imports      CoreShapes: , bdo: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "Initial SHACL constraints for Events and its subclasses" .
+
+bds:EventShape-eventText
+        a                sh:PropertyShape ;
+        dash:editor      dash:TextAreaWithLangEditor ;
+        dash:singleLine  false ;
+        sh:datatype      rdf:langString ;
+        sh:name          "event text"@en ;
+        sh:path          bdo:eventText .
+
+bds:EventShape-onOrAbout
+        a               sh:PropertyShape ;
+        sh:datatype     xsd:string ;
+        sh:description  "this property should not be used. Use on of the other 4 forms instead."@en ;
+        sh:maxCount     1 ;
+        sh:name         "event occurred on or about"@en ;
+        sh:path         bdo:onOrAbout .
+
+bds:EventShape-onDate
+        a            sh:PropertyShape ;
+        dash:editor  dash:DatePickerEditor ;
+        sh:datatype  xsd:date ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred on"@en ;
+        sh:path      bdo:onDate .
+
+bds:EventShape-notBefore
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred not before"@en ;
+        sh:path      bdo:notBefore .
+
+bds:EventShape-notAfter
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred not before"@en ;
+        sh:path      bdo:notAfter .
+
+bds:EventShape-eventWho
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:AgentInRole ;
+        sh:name      "who was involved in the event"@en ;
+        sh:path      bdo:eventWho .
+
+bds:EventShape  a       sh:NodeShape ;
+        rdfs:label      "Event Shape"@en ;
+        sh:property     bds:EventShape-onOrAbout , bds:EventShape-eventWhere , bds:EventShape-onDate , bds:EventShape-notAfter , bds:EventShape-onYear , bds:EventShape-notBefore , bds:EventShape-eventWho , bds:EventShape-eventText ;
+        sh:targetClass  bdo:Event .
+
+bds:EventShape-eventWhere
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:Place ;
+        sh:maxCount  1 ;
+        sh:name      "where event occurred"@en ;
+        sh:path      bdo:eventWhere .
+
+bds:EventShape-onYear
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred during the year"@en ;
+        sh:path      bdo:onYear .

@@ -113,6 +113,6 @@ public class OntTestLoading2 {
 
         // PROCESS IMPORTS TRUE
         initOdm();        
-        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_WI13", false);
+        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_BASE", false);
     }
 }
