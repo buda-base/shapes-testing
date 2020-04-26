@@ -40,7 +40,8 @@ public class Jena_EditServ_SSV {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA = REZ_NM+".ttl";
+    static final String DATA_VER = "";
+    static final String DATA = REZ_NM+DATA_VER+".ttl";
 
     static Graph testGraph;
     static Model testModel;
@@ -59,28 +60,28 @@ public class Jena_EditServ_SSV {
         
         ShaclSimpleValidator ssv = new ShaclSimpleValidator();
         
-        System.out.println("\n\nCalling Shapes.parseAll( "+SHAPES+" )");
+        logger.info("Calling Shapes.parseAll({})", SHAPES);
         shapes = Shapes.parseAll(shapesGraph);
-        System.out.println("Shapes.parseAll Completed");
+        logger.info("Shapes.parseAll Completed");
 
-        System.out.println("\n\nCalling ShaclSimpleValidator.conforms( "+SHAPES+", "+DATA+" )");
+        logger.info("Calling ShaclSimpleValidator.conforms({}, {})", SHAPES, DATA);
         boolean conforms = ssv.conforms(shapes, testGraph);
-        System.out.println("ShaclSimpleValidator conforms "+conforms);
+        logger.info("ShaclSimpleValidator Node conforms {}", conforms);
         
         
         Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
         
-        System.out.println("\n\nCalling ShaclSimpleValidator.conforms( "+SHAPES+", "+DATA+", "+rez.asNode()+" )");
+        logger.info("Calling ShaclSimpleValidator.conforms({}, {}, {})", SHAPES, DATA, rez.asNode());
         conforms = ssv.conforms(shapes, testGraph, rez.asNode());
-        System.out.println("ShaclSimpleValidator Node conforms "+conforms);
+        logger.info("ShaclSimpleValidator Node conforms {}", conforms);
         
-        
+        logger.info("Calling ShaclSimpleValidator.validate({}, {}, {})", SHAPES, DATA, rez.asNode());        
         ValidationReport report = ssv.validate(shapes, testGraph, rez.asNode());
         
-        System.out.println("\n\nPRINTING VALIDATION REPORT.ttl\n");
-        ShLib.printReport(report);
+//        logger.info("PRINTING VALIDATION REPORT");
+//        ShLib.printReport(report);
 
-        System.out.println("\n\nPRINTING report.getModel().ttl\n");
+        logger.info("PRINTING report.getModel()");
         RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
     }
 }

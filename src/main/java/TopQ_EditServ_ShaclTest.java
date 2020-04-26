@@ -21,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.jena.graph.Graph;
+import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -32,22 +33,24 @@ import org.slf4j.LoggerFactory;
 import org.topbraid.shacl.engine.ShapesGraph;
 import org.topbraid.shacl.validation.ValidationEngine;
 import org.topbraid.shacl.validation.ValidationEngineFactory;
+import org.topbraid.shacl.validation.ValidationReport;
 
 public class TopQ_EditServ_ShaclTest {
     
-    public static Logger logger = LoggerFactory.getLogger(Jena_EditServ_SSV.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_EditServ_ShaclTest.class);
 
-    static String personShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/person.shapes.ttl";
     static Model testMod;
     
     static final String BDG = "http://purl.bdrc.io/graph/";
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA = REZ_NM+".ttl";
+    static final String DATA_VER = "";
+    static final String DATA = REZ_NM+DATA_VER+".ttl";
 
     static Graph testGraph;
     static Model testModel;    
+    
     static Graph shapesGraph;
     static Model shapesModel;
     
@@ -63,19 +66,34 @@ public class TopQ_EditServ_ShaclTest {
         
         Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
         
-        System.out.println("\n\nmodel size for shapes>> " + shapesModel.size());
+        logger.info("testModel.size() = {} ", testModel.size());        
+        
+        logger.info("shapesModel.size() = {} ", shapesModel.size());        
         ShapesGraph sg = new ShapesGraph(shapesModel);
-        System.out.println("Shapes graph root shapes >> " + sg.getRootShapes());
-        System.out.println("Shapes graph root Model >> " + sg.getShapesModel().size());
-        ValidationEngine ve = ValidationEngineFactory.get().create(DatasetFactory.create(testModel), new URI(BDG+"PersonShapes"), sg,
-                null);
-        System.out.println("Validation Engine config validateShapes >>" + ve.getConfiguration().getValidateShapes());
-        System.out.println("Validation Engine config validateShapes >>" + ve.getConfiguration().setReportDetails(true));
-        // ve.validateAll();
+        logger.info("sg.getRootShapes(): {}", sg.getRootShapes());
+        
+        Dataset ds = DatasetFactory.create(testModel);
+        Resource shapesGraphNm = ResourceFactory.createResource(BDG+"PersonShapes");
+        ds.asDatasetGraph().addGraph(shapesGraphNm.asNode(), shapesGraph);
+        
+        URI shapesGraphUri = new URI(BDG+"PersonShapes");
+        logger.info("Creating ValidationEngine for {}", shapesGraphUri);
+        ValidationEngine ve = ValidationEngineFactory.get().create(ds, shapesGraphUri, sg, null);
+        logger.info("Should the ValidationEngine validateShapes: {}", ve.getConfiguration().getValidateShapes());
+        logger.info("Setting ValidationEngine report to include sh:details");
+        ve.getConfiguration().setReportDetails(true);
+        
+        logger.info("ValidationEngine Shapes graph {}", ve.getShapesGraphURI());
+        logger.info("ValidationEngine .getShapesModel().size() = {}", ve.getShapesModel().size());
+
+//        logger.info("Validating ALL in {}", DATA);
+//        ve.validateAll();
+        
+        logger.info("Validating Node {} in {}", rez.getLocalName(), DATA);
         ve.validateNode(rez.asNode());
-        System.out.println("Shapes graph URI >> " + ve.getShapesGraphURI());
-        System.out.println("Shapes model >> " + ve.getShapesModel().size());
-        System.out.println(ve.getValidationReport().conforms());
-        System.out.println(ve.getValidationReport().results());
+        
+        ValidationReport report = ve.getValidationReport();
+        logger.info("report.conforms {}", report.conforms());
+        logger.info("report.results(): {}", report.results());
     }
 }

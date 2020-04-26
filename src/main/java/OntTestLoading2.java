@@ -67,20 +67,21 @@ public class OntTestLoading2 {
         
         // fetch OntModel
         OntModel om = odm.getOntology(ontUri, oms);
+        System.out.println("\n\ngetOntology("+graphLocalName+").getModelSize() == "+om.size());
         writeTtl(om, graphLocalName+"_ONT_MOD_GET_ONT");
         
         Graph g = om.getGraph();
         Model m4g = ModelFactory.createModelForGraph(g);
         writeTtl(m4g, graphLocalName+"_M4G");
         
-        OntModel unionOM = ModelFactory.createOntologyModel();
-        unionOM.add(om.getBaseModel());
-        ExtendedIterator<OntModel> it = om.listSubModels();
-        while (it.hasNext()) {
-            OntModel sm = it.next();
-            unionOM.add(sm);
-        }
-        writeTtl(m4g, graphLocalName+"_UNION_OM");
+//        OntModel unionOM = ModelFactory.createOntologyModel();
+//        unionOM.add(om.getBaseModel());
+//        ExtendedIterator<OntModel> it = om.listSubModels();
+//        while (it.hasNext()) {
+//            OntModel sm = it.next();
+//            unionOM.add(sm);
+//        }
+//        writeTtl(m4g, graphLocalName+"_UNION_OM");
         
         if (rt) {
             // send OntModel to Fuseki and retrieve Model by graph name
@@ -102,17 +103,13 @@ public class OntTestLoading2 {
 //        // PROCESS IMPORTS TRUE
 //        initOdm();        
 //        doTest(PERSON_SHAPES, true, "PersonShapes_WI13");
-//
-//        // PROCESS IMPORTS FALSE
-//        initOdm();
-//        doTest(PERSON_UI_SHAPES, false, "PersonUIhapes_NI13");        
-//
-//        // PROCESS IMPORTS TRUE
-//        initOdm();        
-//        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_WI13");
+
+        // PROCESS IMPORTS FALSE
+        initOdm();
+        doTest(PERSON_UI_SHAPES, false, "PersonUIhapes_BASE", false);        
 
         // PROCESS IMPORTS TRUE
         initOdm();        
-        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_BASE", false);
+        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL", false);
     }
 }

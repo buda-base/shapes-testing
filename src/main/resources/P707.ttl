@@ -116,7 +116,7 @@ bdr:EVD4758367CFC1276C
 .
 
 bdr:P707  a                  bdo:Person ;
-        bdo:hasFather        bdr:P705 ;
+        bdo:hasFather        bdr:P707 ;
         bdo:hasParent        bdr:P705 ;
         bdo:isRoot           true ;
         bdo:kinWith          bdr:P705 ;
@@ -156,4 +156,3 @@ bdr:NMEA2B380AF0BBFB1B
         a           bdo:PersonGterStonTitle ;
         rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
 .
-

@@ -26,12 +26,6 @@
 @prefix bdsa:  <http://purl.bdrc.io/ontology/shapes/adm/> .
 @prefix lcsh:  <http://id.loc.gov/authorities/subjects/> .
 
-bds:PersonShape-personStudentOf
-        a               sh:PropertyShape ;
-        sh:class        bdo:Person ;
-        sh:description  "this Person may have zero or more teachers."@en ;
-        sh:path         bdo:personStudentOf .
-
 bds:PersonShape-personName
         a               sh:PropertyShape ;
         sh:description  "this Person may have one or more names."@en ;
@@ -39,6 +33,34 @@ bds:PersonShape-personName
         sh:node         bds:PersonNameShape ;
         sh:nodeKind     sh:IRI ;
         sh:path         bdo:personName .
+
+bds:PersonNameShape  a  sh:NodeShape ;
+        rdfs:label      "Person Name Shape"@en ;
+        sh:property     bds:PersonNameShape-personNameType ;
+        sh:property     bds:PersonNameShape-personNameLabel ;
+        sh:targetClass  bdo:PersonName .
+
+bds:PersonNameShape-personNameLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "this Person has a name given by the label."@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdfs:label .
+
+bds:PersonNameShape-personNameType
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonName ;
+        sh:description  "this Person has a name of the given type."@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdf:type .
+
+bds:PersonShape-personStudentOf
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more teachers."@en ;
+        sh:path         bdo:personStudentOf .
 
 bds:PersonShape-personTeacherOf
         a               sh:PropertyShape ;
@@ -176,14 +198,6 @@ bds:PersonShape-hasOlderSister
         sh:order        "2"^^xsd:decimal ;
         sh:path         bdo:hasOlderSister .
 
-bds:PersonNameShape-personNameLabel
-        a               sh:PropertyShape ;
-        sh:datatype     rdf:langString ;
-        sh:description  "this Person has a name given by the label."@en ;
-        sh:maxCount     1 ;
-        sh:minCount     1 ;
-        sh:path         rdfs:label .
-
 bds:PersonShape-hasGrandmother
         a               sh:PropertyShape ;
         sh:description  "this Person may have at most two Grandmothers."@en ;
@@ -191,14 +205,6 @@ bds:PersonShape-hasGrandmother
         sh:maxCount     2 ;
         sh:node         bds:FemaleShape ;
         sh:path         bdo:hasGrandmother .
-
-bds:PersonNameShape-personNameType
-        a               sh:PropertyShape ;
-        sh:class        bdo:PersonName ;
-        sh:description  "this Person has a name of the given type."@en ;
-        sh:maxCount     1 ;
-        sh:minCount     1 ;
-        sh:path         rdf:type .
 
 bds:PersonShape-kinWith
         a               sh:PropertyShape ;
@@ -238,11 +244,6 @@ bds:PersonShape-hasDaughter
         sh:path         bdo:hasDaughter .
 
 bdo:Person  bds:rootShape  bds:PersonShape .
-
-bds:PersonNameShape  a  sh:NodeShape ;
-        rdfs:label      "Person Name Shape"@en ;
-        sh:property     bds:PersonNameShape-personNameType , bds:PersonNameShape-personNameLabel ;
-        sh:targetClass  bdo:PersonName .
 
 bds:PersonShape-hasMother
         a               sh:PropertyShape ;
