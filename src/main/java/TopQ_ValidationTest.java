@@ -18,27 +18,21 @@
  */
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.jena.graph.Graph;
-import org.apache.jena.query.Dataset;
-import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.topbraid.shacl.engine.ShapesGraph;
-import org.topbraid.shacl.validation.ValidationEngine;
-import org.topbraid.shacl.validation.ValidationEngineFactory;
-import org.topbraid.shacl.validation.ValidationReport;
+import org.topbraid.shacl.validation.ValidationUtil;
 
-public class TopQ_EditServ_ShaclTest {
+public class TopQ_ValidationTest {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_EditServ_ShaclTest.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest.class);
 
     static Model testMod;
 
@@ -46,7 +40,7 @@ public class TopQ_EditServ_ShaclTest {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_noNames";
+    static final String DATA_VER = "";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static Graph testGraph;
@@ -65,37 +59,15 @@ public class TopQ_EditServ_ShaclTest {
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
 
-        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
-
         logger.info("testModel.size() = {} ", testModel.size());
-
         logger.info("shapesModel.size() = {} ", shapesModel.size());
-        ShapesGraph sg = new ShapesGraph(shapesModel);
-        logger.info("sg.getRootShapes(): {}", sg.getRootShapes());
+        
+        
+        // Perform the validation of everything, using the data model
+        // also as the shapes model - you may have them separated
+        Resource report = ValidationUtil.validateModel(testModel, shapesModel, true);
 
-        Dataset ds = DatasetFactory.create(testModel);
-        Resource shapesGraphNm = ResourceFactory.createResource(BDG + "PersonShapes");
-        ds.asDatasetGraph().addGraph(shapesGraphNm.asNode(), shapesGraph);
-
-        URI shapesGraphUri = new URI(BDG + "PersonShapes");
-        logger.info("Creating ValidationEngine for {}", shapesGraphUri);
-        ValidationEngine ve = ValidationEngineFactory.get().create(ds, shapesGraphUri, sg, null);
-        logger.info("Should the ValidationEngine validateShapes: {}", ve.getConfiguration().getValidateShapes());
-        logger.info("Setting ValidationEngine report to include sh:details");
-        ve.getConfiguration().setReportDetails(true);
-        ve.applyEntailments();
-
-        logger.info("ValidationEngine Shapes graph {}", ve.getShapesGraphURI());
-        logger.info("ValidationEngine .getShapesModel().size() = {}", ve.getShapesModel().size());
-
-        logger.info("Validating ALL in {}", DATA);
-        ve.validateAll();
-
-//        logger.info("Validating Node {} in {}", rez.getLocalName(), DATA);
-//        ve.validateNode(rez.asNode());
-
-        ValidationReport report = ve.getValidationReport();
-        logger.info("report.conforms {}", report.conforms());
-        logger.info("report.results(): {}", report.results());
+        logger.info("PRINTING report.getModel()");
+        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
     }
 }
