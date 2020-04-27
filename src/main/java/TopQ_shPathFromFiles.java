@@ -17,7 +17,6 @@ public class TopQ_shPathFromFiles {
     static String identifierShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/identifier.shapes.ttl";
     static String instancesShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/instance.shapes.ttl";
     static String itemShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/item.shapes.ttl";
-    static String personUIShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/person.ui.shapes.ttl";
     static String workShapeUri = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/work.shapes.ttl";
     static ArrayList<String> uris;
 
@@ -30,7 +29,6 @@ public class TopQ_shPathFromFiles {
         uris.add(identifierShapeUri);
         uris.add(instancesShapeUri);
         uris.add(itemShapeUri);
-        // uris.add(personUIShapeUri);
         uris.add(workShapeUri);
     }
 
