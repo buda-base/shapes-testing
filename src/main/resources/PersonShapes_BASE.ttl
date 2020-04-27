@@ -36,7 +36,6 @@ bds:PersonShape-personName
 
 bds:PersonNameShape  a  sh:NodeShape ;
         rdfs:label      "Person Name Shape"@en ;
-        sh:property     bds:PersonNameShape-personNameType ;
         sh:property     bds:PersonNameShape-personNameLabel ;
         sh:targetClass  bdo:PersonName .
 
@@ -47,14 +46,6 @@ bds:PersonNameShape-personNameLabel
         sh:maxCount     1 ;
         sh:minCount     1 ;
         sh:path         rdfs:label .
-
-bds:PersonNameShape-personNameType
-        a               sh:PropertyShape ;
-        sh:class        bdo:PersonName ;
-        sh:description  "this Person has a name of the given type."@en ;
-        sh:maxCount     1 ;
-        sh:minCount     1 ;
-        sh:path         rdf:type .
 
 bds:PersonShape-personStudentOf
         a               sh:PropertyShape ;
