@@ -69,6 +69,9 @@
 @prefix bdu:   <http://purl.bdrc.io/resource-nc/user/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
+##
+## triples from bdo.ttl needed for validation
+##
 bdo:PersonPrimaryName
   a owl:Class ;
   adm:technicalComment "what is the difference with :PersonCommonName"@en ;
@@ -89,8 +92,35 @@ bdo:PersonGterStonTitle
   rdfs:subClassOf bdo:PersonName ;
 .
 
+##
+## Gender defns from ontology/core
+##
+bdo:Gender
+  a owl:Class ;
+  adm:userTooltip "The Gender Type records the gender of a :Person if known. If the gender is not known, then bdr:GenderNotSpecified is used."@en ;
+  rdfs:label "Gender"@en ;
+.
+bdr:GenderFemale
+  a bdo:Gender ;
+  skos:prefLabel "female"@en ;
+.
+bdr:GenderMale
+  a bdo:Gender ;
+  skos:prefLabel "male"@en ;
+.
+bdr:GenderMixed
+  a bdo:Gender ;
+  skos:prefLabel "mixed gender"@en ;
+  adm:translationPriority 2 ;
+.
+bdr:GenderNotSpecified
+  a bdo:Gender ;
+  skos:prefLabel "gender not specified"@en ;
+.
 
-
+##
+## P707 as in newcorerw
+##
 bdr:NMC2A097019ABA499F
         a           bdo:PersonPrimaryName ;
         rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
