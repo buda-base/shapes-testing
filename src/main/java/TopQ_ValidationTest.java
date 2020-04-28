@@ -40,7 +40,7 @@ public class TopQ_ValidationTest {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_augmented";
+    static final String DATA_VER = "_augmented1";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static Graph testGraph;
@@ -59,7 +59,7 @@ public class TopQ_ValidationTest {
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
 
-        logger.info("testModel.size() = {} ", testModel.size());
+        logger.info("dataModel.size() = {} ", testModel.size());
         logger.info("shapesModel.size() = {} ", shapesModel.size());
         
         

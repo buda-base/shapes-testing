@@ -69,6 +69,72 @@
 @prefix bdu:   <http://purl.bdrc.io/resource-nc/user/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
+##
+## triples needed for validateNode
+##
+
+##
+## PersonName subclasses from ontology/core
+##
+bdo:PersonPrimaryName
+  a owl:Class ;
+  adm:technicalComment "what is the difference with :PersonCommonName"@en ;
+  adm:userTooltip "The primary name by which a Person is known"@en ;
+  rdfs:label "Primary Name"@en ;
+  rdfs:subClassOf bdo:PersonName ;
+.
+bdo:PersonPrimaryTitle
+  a owl:Class ;
+  adm:userTooltip "The primary or common title by which a Person is known."@en ;
+  rdfs:label "Primary Title"@en ;
+  rdfs:subClassOf bdo:PersonName ;
+.
+bdo:PersonGterStonTitle
+  a owl:Class ;
+  adm:userTooltip "The title bestowed upon a Person who has discovered a terma"@en ;
+  rdfs:label "Terton Title"@en ;
+  rdfs:subClassOf bdo:PersonName ;
+.
+
+##
+## Gender defns from ontology/core
+##
+bdo:Gender
+  a owl:Class ;
+  adm:userTooltip "The Gender Type records the gender of a :Person if known. If the gender is not known, then bdr:GenderNotSpecified is used."@en ;
+  rdfs:label "Gender"@en ;
+.
+bdr:GenderFemale
+  a bdo:Gender ;
+  skos:prefLabel "female"@en ;
+.
+bdr:GenderMale
+  a bdo:Gender ;
+  skos:prefLabel "male"@en ;
+.
+bdr:GenderMixed
+  a bdo:Gender ;
+  skos:prefLabel "mixed gender"@en ;
+  adm:translationPriority 2 ;
+.
+bdr:GenderNotSpecified
+  a bdo:Gender ;
+  skos:prefLabel "gender not specified"@en ;
+.
+
+##
+## bits of P705 needed for vaidation of P707
+## Using:  ValidationUtil.validateModel(testModel, shapesModel, true);
+##
+bdr:P705  a                  bdo:Person ;
+        bdo:personGender     bdr:GenderMale ;
+        bdo:personName       bdr:NM0895CB6787E8AC6E ;
+.
+
+
+##
+## P707 as in newcorerw
+##
 bdr:NMC2A097019ABA499F
         a           bdo:PersonPrimaryName ;
         rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
@@ -116,7 +182,7 @@ bdr:EVD4758367CFC1276C
 .
 
 bdr:P707  a                  bdo:Person ;
-        bdo:hasFather        bdr:P707 ;
+        bdo:hasFather        bdr:P705 ;
         bdo:hasParent        bdr:P705 ;
         bdo:isRoot           true ;
         bdo:kinWith          bdr:P705 ;
@@ -151,3 +217,4 @@ bdr:NMEA2B380AF0BBFB1B
         a           bdo:PersonGterStonTitle ;
         rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
 .
+
