@@ -212,7 +212,7 @@ bds:PersonShape-genderMale
         sh:maxCount  1 ;
         sh:minCount  1 ;
         sh:name      "male"@en ;
-        sh:path      bdo:gender .
+        sh:path      bdo:personGender .
 
 bds:AssociatedPersonsPropertyGroup
         a           sh:PropertyGroup ;
@@ -244,7 +244,7 @@ bds:PersonShape-gender
         sh:maxCount     1 ;
         sh:name         "has gender"@en ;
         sh:order        "1"^^xsd:decimal ;
-        sh:path         bdo:gender .
+        sh:path         bdo:personGender .
 
 bds:PersonNameShape-personNameLabel
         a                sh:PropertyShape ;
@@ -352,7 +352,7 @@ bds:PersonShape-genderFemale
         sh:maxCount  1 ;
         sh:minCount  1 ;
         sh:name      "female"@en ;
-        sh:path      bdo:gender .
+        sh:path      bdo:personGender .
 
 bds:PersonShape-kinWith
         a               sh:PropertyShape ;
@@ -446,7 +446,7 @@ PersonEventShapes:  a    owl:Ontology ;
         owl:imports      EventShapes: , <http://datashapes.org/dash> ;
         owl:versionInfo  "Initial SHACL constraints for Person Events" .
 
-bds:EventShape-personEventRole
+bds:PersonEventShape-personEventRole
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:Role ;
@@ -454,7 +454,7 @@ bds:EventShape-personEventRole
         sh:name      "role associated with the event"@en ;
         sh:path      bdo:personEventRole .
 
-bds:EventShape-personEventType
+bds:PersonEventShape-personEventType
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:PersonEventType ;
@@ -463,7 +463,7 @@ bds:EventShape-personEventType
         sh:name      "role associated with the event"@en ;
         sh:path      bdo:eventType .
 
-bds:EventShape-personEventCorporation
+bds:PersonEventShape-personEventCorporation
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:Corporation ;

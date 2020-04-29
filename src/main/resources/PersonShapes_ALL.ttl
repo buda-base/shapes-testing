@@ -55,7 +55,7 @@ bds:PersonShape-genderMale
         sh:hasValue  bdr:GenderMale ;
         sh:maxCount  1 ;
         sh:minCount  1 ;
-        sh:path      bdo:gender .
+        sh:path      bdo:personGender .
 
 bds:PersonShape-hasGranddaughter
         a               sh:PropertyShape ;
@@ -125,7 +125,7 @@ bds:PersonShape-gender
         sh:description  "this Person may have at most one Gender or none if not known."@en ;
         sh:group        bds:IdentityPropertyGroup ;
         sh:maxCount     1 ;
-        sh:path         bdo:gender .
+        sh:path         bdo:personGender .
 
 bds:PersonShape-hasSister
         a               sh:PropertyShape ;
@@ -139,7 +139,7 @@ bds:PersonShape-genderFemale
         sh:hasValue  bdr:GenderFemale ;
         sh:maxCount  1 ;
         sh:minCount  1 ;
-        sh:path      bdo:gender .
+        sh:path      bdo:personGender .
 
 bds:PersonShape-hasCousin
         a               sh:PropertyShape ;
@@ -295,7 +295,7 @@ PersonEventShapes:  a    owl:Ontology ;
         owl:imports      EventShapes: , <http://datashapes.org/dash> ;
         owl:versionInfo  "Initial SHACL constraints for Person Events" .
 
-bds:EventShape-personEventRole
+bds:PersonEventShape-personEventRole
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:Role ;
@@ -303,7 +303,7 @@ bds:EventShape-personEventRole
         sh:name      "role associated with the event"@en ;
         sh:path      bdo:personEventRole .
 
-bds:EventShape-personEventType
+bds:PersonEventShape-personEventType
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:PersonEventType ;
@@ -312,7 +312,7 @@ bds:EventShape-personEventType
         sh:name      "role associated with the event"@en ;
         sh:path      bdo:eventType .
 
-bds:EventShape-personEventCorporation
+bds:PersonEventShape-personEventCorporation
         a            sh:PropertyShape ;
         dash:editor  dash:InstancesSelectEditor ;
         sh:class     bdo:Corporation ;
