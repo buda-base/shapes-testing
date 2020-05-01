@@ -18,35 +18,40 @@
  */
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.apache.jena.graph.Graph;
-import org.apache.jena.query.Dataset;
-import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.topbraid.shacl.engine.ShapesGraph;
 import org.topbraid.shacl.validation.ValidationEngine;
 import org.topbraid.shacl.validation.ValidationEngineConfiguration;
-import org.topbraid.shacl.validation.ValidationEngineFactory;
-import org.topbraid.shacl.validation.ValidationReport;
 import org.topbraid.shacl.validation.ValidationUtil;
 
-public class TopQ_ValidateNode {
+/**
+ * 
+ * Example of validating all occurrence of a facet of some subject. 
+ *
+ */
+public class TopQ_ValidateFacetsEx02 {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidateNode.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidateFacetsEx02.class);
 
     static Model testMod;
 
     static final String BDG = "http://purl.bdrc.io/graph/";
+    static final String BDO = "http://purl.bdrc.io/ontology/core/";
     static final String BDR = "http://purl.bdrc.io/resource/";
+    static final String BDS = "http://purl.bdrc.io/ontology/shapes/core/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
     static final String DATA_VER = "_augmented2";
@@ -68,19 +73,25 @@ public class TopQ_ValidateNode {
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
     
-    public static Resource validateNode(Model dataModel, Model shapesModel, Resource focus, boolean validateShapes) {
-        return validateNode(dataModel, shapesModel, focus, new ValidationEngineConfiguration().setValidateShapes(validateShapes));
-    }
-    
-    public static Resource validateNode(Model dataModel, Model shapesModel, Resource focus, ValidationEngineConfiguration configuration) {
-
+    public static Model validateFacets(Model dataModel, Model shapesModel, Resource shape, List<RDFNode> focusNodes) {
+        
+        ValidationEngineConfiguration configuration = new ValidationEngineConfiguration().setValidateShapes(true);
+        
         ValidationEngine engine = ValidationUtil.createValidationEngine(dataModel, shapesModel, configuration);
         engine.setConfiguration(configuration);
+        
         logger.info("ValidationEngine Shapes graph {}", engine.getShapesGraphURI());
         logger.info("ValidationEngine .getShapesModel().size() = {}", engine.getShapesModel().size());
+        
         try {
             engine.applyEntailments();
-            return engine.validateNode(focus.asNode());
+            Model repModel = ModelFactory.createDefaultModel();
+            for (RDFNode focus : focusNodes) {
+                logger.info("ValidateNode {}", focus);
+                Resource report = engine.validateNode(focus.asNode());
+                repModel.add(report.getModel());
+            }
+            return repModel;
         }
         catch(InterruptedException ex) {
             return null;
@@ -91,16 +102,19 @@ public class TopQ_ValidateNode {
 
         logger.info("dataModel.size() = {} ", dataModel.size());
         logger.info("shapesModel.size() = {} ", shapesModel.size());
+        
+        Resource focus = ResourceFactory.createResource(BDR + REZ_NM);
+        
+        Property prop = ResourceFactory.createProperty(BDO+"personName");
+        NodeIterator facetItr = dataModel.listObjectsOfProperty(focus, prop);
+        List<RDFNode> facets = facetItr.toList();
+        
+        Resource shape = ResourceFactory.createResource(BDS+"PersonNameShape");
+        
+        logger.info("validating facets: {} against shape: {}", facets, shape);
+        Model report = validateFacets(dataModel, shapesModel, shape, facets);
 
-//        logger.info("Validating ALL in {}", DATA);
-//        Resource report = ValidationUtil.validateModel(dataModel, shapesModel, true);
-
-        Resource rez = ResourceFactory.createResource(BDR + "NMC2A097019ABA499F");
-//        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
-        logger.info("Validating Node {} in {}", rez.getLocalName(), DATA);
-        Resource report = validateNode(dataModel, shapesModel, rez, true);
-
-        logger.info("PRINTING report.getModel()");
-        RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);
+        logger.info("PRINTING report Model");
+        RDFDataMgr.write(System.out, report, Lang.TTL);
     }
 }

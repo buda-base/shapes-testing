@@ -42,9 +42,9 @@ import org.topbraid.shacl.validation.ValidationUtil;
  * Example of validating all occurrence of a facet of some subject. 
  *
  */
-public class TopQ_ValidateFacets {
+public class TopQ_ValidateFacetsEx01 {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidateFacets.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidateFacetsEx01.class);
 
     static Model testMod;
 
@@ -54,7 +54,7 @@ public class TopQ_ValidateFacets {
     static final String BDS = "http://purl.bdrc.io/ontology/shapes/core/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "";
+    static final String DATA_VER = "_augmented2";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
     
     static final boolean validateShapes = true;
@@ -73,7 +73,7 @@ public class TopQ_ValidateFacets {
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
     
-    public static Resource validateFacets(Model dataModel, Model shapesModel, Resource focus, Resource shape, List<RDFNode> focusNodes) {
+    public static Resource validateFacets(Model dataModel, Model shapesModel, Resource shape, List<RDFNode> focusNodes) {
         
         ValidationEngineConfiguration configuration = new ValidationEngineConfiguration().setValidateShapes(true);
         
@@ -107,7 +107,7 @@ public class TopQ_ValidateFacets {
         Resource shape = ResourceFactory.createResource(BDS+"PersonNameShape");
         
         logger.info("validating facets: {} against shape: {}", facets, shape);
-        Resource report = validateFacets(dataModel, shapesModel, focus, shape, facets);
+        Resource report = validateFacets(dataModel, shapesModel, shape, facets);
 
         logger.info("PRINTING report.getModel()");
         RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);

@@ -1,0 +1,58 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+bdr:NMC2A097019ABA499F
+        a           bdo:PersonPrimaryName ;
+        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NM0895CB6787E8AC6E
+        a           bdo:PersonPrimaryTitle ;
+        rdfs:label  "sprul sku dri med/"@bo-x-ewts ;
+.
+
+bdr:NM2463D933BA1F9A38
+        a           bdo:PersonPrimaryTitle ;
+        rdfs:label  "bdud 'joms gter sras dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NMEA2B380AF0BBFB1B
+        a           bdo:PersonGterStonTitle ;
+        rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
+.
+
+bdr:EVFD910DBE53BCE208
+        a           bdo:PersonDeath ;
+        bdo:onYear  "1924"^^xsd:gYear ;
+.
+
+bdr:EVD4758367CFC1276C
+        a              bdo:PersonBirth ;
+        bdo:notAfter   "1882"^^xsd:gYear ;
+        bdo:notBefore  "1881"^^xsd:gYear ;
+.
+
+bdr:P707  a                  bdo:Person ;
+        bdo:hasFather        bdr:P705 ;
+        bdo:hasParent        bdr:P705 ;
+        bdo:isRoot           true ;
+        bdo:kinWith          bdr:P705 ;
+        bdo:note             bdr:NT08B650B715F414F1 ;
+        bdo:personEvent      bdr:EVFD910DBE53BCE208 , bdr:EVD4758367CFC1276C ;
+        bdo:personGender     bdr:GenderMale ;
+        bdo:personName       bdr:NM0895CB6787E8AC6E , bdr:NM2463D933BA1F9A38 , bdr:NMEA2B380AF0BBFB1B , bdr:NMC2A097019ABA499F ;
+        bdo:personStudentOf  bdr:P705 ;
+        skos:prefLabel       "dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NT08B650B715F414F1
+        a             bdo:Note ;
+        bdo:noteText  "this son of bdud 'joms gling pa was an important gter ston in his own right. so far his gter chos have not been found."@en ;
+.

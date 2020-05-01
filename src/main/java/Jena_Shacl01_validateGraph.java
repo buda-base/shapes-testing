@@ -37,7 +37,7 @@ public class Jena_Shacl01_validateGraph {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "";
+    static final String DATA_VER = "_augmented2";
     static final String DATA = REZ_NM+DATA_VER+".ttl";
 
     public static void main(String ...args) {
@@ -53,12 +53,10 @@ public class Jena_Shacl01_validateGraph {
 //        logger.info("VALIDATING ALL in {}", DATA);
 //        ValidationReport report = sv.validate(shapes, dataGraph);
         
-        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
+        Resource rez = ResourceFactory.createResource(BDR + "NMC2A097019ABA499F");
+//        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
         logger.info("Validating Node {} in {}", rez.getLocalName(), DATA);
         ValidationReport report = sv.validate(shapes, dataGraph, rez.asNode());
-        
-//        logger.info("PRINTING VALIDATION REPORT.ttl");
-//        ShLib.printReport(report);
 
         logger.info("PRINTING report.getModel().ttl");
         RDFDataMgr.write(System.out, report.getModel(), Lang.TTL);

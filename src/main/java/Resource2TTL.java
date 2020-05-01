@@ -33,9 +33,9 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TopQ_GetShape {
+public class Resource2TTL {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_GetShape.class);
+    public static Logger logger = LoggerFactory.getLogger(Resource2TTL.class);
 
     static final String BDG = "http://purl.bdrc.io/graph/";
     static final String BDR = "http://purl.bdrc.io/resource/";

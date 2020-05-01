@@ -69,78 +69,24 @@
 @prefix bdu:   <http://purl.bdrc.io/resource-nc/user/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-##
-## triples needed for validateNode
-##
-
-##
-## PersonName subclasses from ontology/core
-##
-bdo:PersonPrimaryName
-  rdfs:subClassOf bdo:PersonName ;
-.
-bdo:PersonPrimaryTitle
-  rdfs:subClassOf bdo:PersonName ;
-.
-bdo:PersonGterStonTitle
-  rdfs:subClassOf bdo:PersonName ;
-.
-
-##
-## Gender defns from ontology/core
-##
-# bdo:Gender
-#   a owl:Class ;
-#   adm:userTooltip "The Gender Type records the gender of a :Person if known. If the gender is not known, then bdr:GenderNotSpecified is used."@en ;
-#   rdfs:label "Gender"@en ;
-# .
-# bdr:GenderFemale
-#   a bdo:Gender ;
-# .
-bdr:GenderMale
-  a bdo:Gender ;
-.
-# bdr:GenderNotSpecified
-#   a bdo:Gender ;
-# .
-
-##
-## bits of P705 needed for vaidation of P707
-## Using:  ValidationUtil.validateModel(testModel, shapesModel, true);
-##
-bdr:P705  
-  a                  bdo:Person ;
-  bdo:personGender   bdr:GenderMale ;
-.
-#        bdo:personName       bdr:NM0895CB6787E8AC6E ;
-#        bdo:personGender     bdr:GenderMale ;
-
-
-##
-## P707 as in newcorerw
-##
 bdr:NMC2A097019ABA499F
-        a           bdo:PersonPrimaryName ;
-        skos:prefLabel  "dri med 'od zer/"@bo-x-ewts ;
+        a           bdo:FruitCake ;
+        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
 .
-#        a           bdo:PersonPrimaryName ;
-#        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
 
 bdr:NM0895CB6787E8AC6E
         a           bdo:PersonPrimaryTitle ;
-        rdfs:label  "sprul sku dri med/"@bo-x-ewts ;
-.
-
-bda:LG29B76373BAD55E40
-        a               adm:LogEntry ;
-        adm:logDate     "2019-01-04T16:22:17.304Z"^^xsd:dateTime ;
-        adm:logMessage  "added father"@en ;
-        adm:logWho      bdr:U00007 ;
+        skos:prefLabel  "sprul sku dri med/"@bo-x-ewts ;
 .
 
 bdr:NM2463D933BA1F9A38
         a           bdo:PersonPrimaryTitle ;
         rdfs:label  "bdud 'joms gter sras dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NMEA2B380AF0BBFB1B
+        a           bdo:PersonGterStonTitle ;
+        rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
 .
 
 bdr:EVFD910DBE53BCE208
@@ -168,7 +114,7 @@ bdr:EVD4758367CFC1276C
 .
 
 bdr:P707  a                  bdo:Person ;
-        bdo:hasFather        bdr:P705 ;
+        bdo:hasFather        bdr:P707 ;
         bdo:hasParent        bdr:P705 ;
         bdo:isRoot           true ;
         bdo:kinWith          bdr:P705 ;
@@ -199,8 +145,9 @@ bda:LG72478F481A249B1E
         adm:logWho      bdr:U00020 ;
 .
 
-bdr:NMEA2B380AF0BBFB1B
-        a           bdo:PersonGterStonTitle ;
-        rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
+bda:LG29B76373BAD55E40
+        a               adm:LogEntry ;
+        adm:logDate     "2019-01-04T16:22:17.304Z"^^xsd:dateTime ;
+        adm:logMessage  "added father"@en ;
+        adm:logWho      bdr:U00007 ;
 .
-
