@@ -1,0 +1,14 @@
+#!/bin/sh
+
+SHAPES="https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/$1"
+echo SHAPES: $SHAPES
+URL='http%3a%2f%2fpurl.bdrc.io%2fgraph%2f'$2
+echo URL: $URL '\n'
+HEADER="Content-type: text/turtle"
+echo HEADER: $HEADER
+ENDPOINT='http://buda1.bdrc.io:13180/fuseki/newcorerw/shacl?'
+echo ENDPOINT: $ENDPOINT '\n'
+
+echo CMD: "curl -s GET $SHAPES | curl -XPOST --data-binary @-  --header '$HEADER' $ENDPOINT$URL" '\n'
+
+curl -s GET $SHAPES | curl -XPOST --data-binary @-  --header "$HEADER" $ENDPOINT$URL

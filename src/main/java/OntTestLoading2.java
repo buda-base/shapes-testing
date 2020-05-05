@@ -96,20 +96,20 @@ public class OntTestLoading2 {
         
         fuConn = RDFConnectionFuseki.create().destination(DS).build();        
 
-//        // PROCESS IMPORTS FALSE
-//        initOdm();
-//        doTest(PERSON_SHAPES, false, "PersonShapes_NI13");        
-//
-//        // PROCESS IMPORTS TRUE
-//        initOdm();        
-//        doTest(PERSON_SHAPES, true, "PersonShapes_WI13");
-
         // PROCESS IMPORTS FALSE
         initOdm();
-        doTest(PERSON_UI_SHAPES, false, "PersonUIhapes_BASE", false);        
+        doTest(PERSON_SHAPES, false, "PersonShapes_BASE02");        
 
         // PROCESS IMPORTS TRUE
         initOdm();        
-        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL", false);
+        doTest(PERSON_SHAPES, true, "PersonShapes_ALL02");
+
+//        // PROCESS IMPORTS FALSE
+//        initOdm();
+//        doTest(PERSON_UI_SHAPES, false, "PersonUIhapes_BASE", false);        
+//
+//        // PROCESS IMPORTS TRUE
+//        initOdm();        
+//        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL", false);
     }
 }

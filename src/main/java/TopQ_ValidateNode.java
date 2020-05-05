@@ -95,8 +95,8 @@ public class TopQ_ValidateNode {
 //        logger.info("Validating ALL in {}", DATA);
 //        Resource report = ValidationUtil.validateModel(dataModel, shapesModel, true);
 
-        Resource rez = ResourceFactory.createResource(BDR + "NMC2A097019ABA499F");
-//        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
+//        Resource rez = ResourceFactory.createResource(BDR + "NMC2A097019ABA499F");
+        Resource rez = ResourceFactory.createResource(BDR + REZ_NM);
         logger.info("Validating Node {} in {}", rez.getLocalName(), DATA);
         Resource report = validateNode(dataModel, shapesModel, rez, true);
 

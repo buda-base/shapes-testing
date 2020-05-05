@@ -116,7 +116,7 @@ bdr:EVD4758367CFC1276C
 .
 
 bdr:P707  a                  bdo:Person ;
-        bdo:hasFather        bdr:P707 ;
+        bdo:hasFather        bdr:P705 ;
         bdo:hasParent        bdr:P705 ;
         bdo:isRoot           true ;
         bdo:kinWith          bdr:P705 ;

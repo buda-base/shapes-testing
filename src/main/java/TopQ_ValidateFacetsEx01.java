@@ -19,6 +19,7 @@
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jena.graph.Graph;
@@ -54,7 +55,7 @@ public class TopQ_ValidateFacetsEx01 {
     static final String BDS = "http://purl.bdrc.io/ontology/shapes/core/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_augmented2";
+    static final String DATA_VER = "";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
     
     static final boolean validateShapes = true;
@@ -98,13 +99,17 @@ public class TopQ_ValidateFacetsEx01 {
         logger.info("dataModel.size() = {} ", dataModel.size());
         logger.info("shapesModel.size() = {} ", shapesModel.size());
         
-        Resource focus = ResourceFactory.createResource(BDR + REZ_NM);
+        Resource focus = dataModel.createResource(BDR + REZ_NM);
+//        Resource focus = ResourceFactory.createResource(BDR + REZ_NM);
         
-        Property prop = ResourceFactory.createProperty(BDO+"personName");
-        NodeIterator facetItr = dataModel.listObjectsOfProperty(focus, prop);
-        List<RDFNode> facets = facetItr.toList();
+//        Property prop = ResourceFactory.createProperty(BDO+"personName");
+//        NodeIterator facetItr = dataModel.listObjectsOfProperty(focus, prop);
+//        List<RDFNode> facets = facetItr.toList();
+//        Resource shape = ResourceFactory.createResource(BDS+"PersonNameShape");
         
-        Resource shape = ResourceFactory.createResource(BDS+"PersonNameShape");
+        List<RDFNode> facets = new ArrayList<RDFNode> (); 
+        facets.add(focus);              
+        Resource shape = ResourceFactory.createResource(BDS+"PersonShape");
         
         logger.info("validating facets: {} against shape: {}", facets, shape);
         Resource report = validateFacets(dataModel, shapesModel, shape, facets);
