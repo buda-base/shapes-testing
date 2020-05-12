@@ -1,0 +1,120 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix PersonShapes: <http://purl.bdrc.io/shapes/core/PersonShapes/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix tosh:  <http://topbraid.org/tosh#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+
+
+bds:PersonShape  a      sh:NodeShape ;
+    rdfs:label      "Person Shape"@en ;
+    sh:property     bds:PersonShape-gender ,
+                    bds:PersonShape-hasFather , 
+                    bds:PersonShape-hasParent , 
+                    bds:PersonShape-kinWith , 
+                    bds:PersonShape-personName ,
+                    bds:PersonShape-personStudentOf ; 
+    sh:targetClass  bdo:Person ;
+    sh:sparql [
+      a sh:SPARQLConstraint ;
+      sh:prefixes [
+        sh:declare [
+          sh:prefix "rdf" ;
+          sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+        ] , [
+          sh:prefix "bdo" ;
+          sh:namespace "http://purl.bdrc.io/ontology/core/" ;
+        ]
+      ] ;
+      sh:select """
+        select $this (rdf:type as ?path) (bdo:Person as ?value)
+	    where {
+           filter not exists { $this ?path ?value }
+	    }
+	  """ ;
+    ] ;
+.
+
+bds:PersonShape-personName
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonName ;
+        sh:description  "this Person may have one or more names."@en ;
+        sh:minCount     1 ;
+        sh:node         bds:PersonNameShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:path         bdo:personName .
+
+bds:PersonNameShape  a  sh:NodeShape ;
+        bds:shapeType   bds:FacetShape ;
+        rdfs:label      "Person Name Shape"@en ;
+        sh:property     bds:PersonNameShape-personNameLabel ;
+.
+#        sh:targetClass  bdo:PersonName .
+
+bds:PersonNameShape-personNameLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "this Person has a name given by the label."@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdfs:label .
+
+bds:PersonShape-personStudentOf
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more teachers."@en ;
+        sh:path         bdo:personStudentOf .
+
+bds:PersonShape-genderMale
+        a            sh:PropertyShape ;
+        sh:hasValue  bdr:GenderMale ;
+        sh:maxCount  1 ;
+        sh:minCount  1 ;
+        sh:path      bdo:personGender .
+
+PersonShapes:  a         owl:Ontology ;
+        owl:imports      <http://purl.bdrc.io/shapes/core/PersonEventShapes/> , <http://purl.bdrc.io/shapes/core/CoreShapes/> , <http://datashapes.org/dash> ;
+        owl:versionInfo  "SHACL constraints for Person" ;
+.
+
+bds:PersonShape-gender
+        a               sh:PropertyShape ;
+        sh:class        bdo:Gender ;
+        sh:description  "this Person may have at most one Gender or none if not known."@en ;
+        sh:group        bds:IdentityPropertyGroup ;
+        sh:maxCount     1 ;
+        sh:path         bdo:personGender .
+
+bds:PersonShape-hasParent
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have at most two parents."@en ;
+        sh:inversePath  bdo:hasChild ;
+        sh:maxCount     2 ;
+        sh:path         bdo:hasParent .
+
+bds:PersonShape-kinWith
+        a               sh:PropertyShape ;
+        sh:class        bdo:Person ;
+        sh:description  "this Person may have zero or more kin."@en ;
+        sh:inversePath  bdo:kinWith ;
+        sh:path         bdo:kinWith .
+
+bds:MaleShape  a     sh:NodeShape ;
+        rdfs:label   "Male Shape"@en ;
+        sh:property  bds:PersonShape-genderMale .
+
+bds:PersonShape-hasFather
+        a               sh:PropertyShape ;
+        sh:description  "this Person may have a father."@en ;
+        sh:inversePath  bdo:hasChild ;
+        sh:maxCount     1 ;
+        sh:node         bds:MaleShape ;
+        sh:path         bdo:hasFather .
