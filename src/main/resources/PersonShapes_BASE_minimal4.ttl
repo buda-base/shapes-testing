@@ -12,15 +12,36 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix dash:  <http://datashapes.org/dash#> .
 
+
 bds:PersonShape  a      sh:NodeShape ;
-        rdfs:label      "Person Shape"@en ;
-        sh:property     bds:PersonShape-gender ,
-                        bds:PersonShape-hasFather , 
-                        bds:PersonShape-hasParent , 
-                        bds:PersonShape-kinWith , 
-                        bds:PersonShape-personName ,
-                        bds:PersonShape-personStudentOf ; 
-        sh:targetClass  bdo:Person .
+    rdfs:label      "Person Shape"@en ;
+    sh:property     bds:PersonShape-gender ,
+                    bds:PersonShape-hasFather , 
+                    bds:PersonShape-hasParent , 
+                    bds:PersonShape-kinWith , 
+                    bds:PersonShape-personName ,
+                    bds:PersonShape-personStudentOf ; 
+    sh:targetClass  bdo:Person ;
+    sh:targetNode "Check Class" ;
+    sh:sparql [
+      a sh:SPARQLConstraint ;
+      sh:prefixes [
+        sh:declare [
+          sh:prefix "rdf" ;
+          sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+        ] , [
+          sh:prefix "bdo" ;
+          sh:namespace "http://purl.bdrc.io/ontology/core/" ;
+        ]
+      ] ;
+      sh:select """
+        select $this (rdf:type as ?path) (bdo:Person as ?value)
+	    where {
+           filter not exists { $this ?path ?value }
+	    }
+	  """ ;
+    ] ;
+.
 
 bds:PersonShape-personName
         a               sh:PropertyShape ;
@@ -61,7 +82,8 @@ bds:PersonShape-genderMale
 
 PersonShapes:  a         owl:Ontology ;
         owl:imports      <http://purl.bdrc.io/shapes/core/PersonEventShapes/> , <http://purl.bdrc.io/shapes/core/CoreShapes/> , <http://datashapes.org/dash> ;
-        owl:versionInfo  "SHACL constraints for Person" .
+        owl:versionInfo  "SHACL constraints for Person" ;
+.
 
 bds:PersonShape-gender
         a               sh:PropertyShape ;

@@ -1,0 +1,77 @@
+@prefix :      <http://purl.bdrc.io/ontology/core/> .
+@prefix bd:    <http://www.bigdata.com/rdf#> .
+@prefix bf:    <http://id.loc.gov/ontologies/bibframe/> .
+@prefix bdg:   <http://purl.bdrc.io/graph/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix adm:   <http://purl.bdrc.io/ontology/admin/> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix eftr:  <http://purl.84000.co/resource/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dila:  <http://purl.dila.edu.tw/resource/> .
+@prefix tmp:   <http://purl.bdrc.io/ontology/tmp/> .
+@prefix text:  <http://jena.apache.org/text#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix lcsh:  <http://id.loc.gov/authorities/subjects/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bda:   <http://purl.bdrc.io/admindata/> .
+
+bda:LG17264A7631C76E1C
+        a               adm:LogEntry ;
+        adm:logDate     "2016-12-23T16:12:34.263Z"^^xsd:dateTime ;
+        adm:logMessage  "Updated total pages"@en ;
+        adm:logWho      bdr:U00006 .
+
+bda:LGCA8A078F7C17D70A
+        a               adm:LogEntry ;
+        adm:logDate     "2016-12-06T12:04:56.81Z"^^xsd:dateTime ;
+        adm:logMessage  "FPL Import"@en ;
+        adm:logWho      bdr:U00006 .
+
+bda:LG092D25F3B2D03EBF
+        a               adm:LogEntry ;
+        adm:logDate     "2019-02-11T19:32:33.446Z"^^xsd:dateTime ;
+        adm:logMessage  "zeroed tbrcIntro"@en ;
+        adm:logWhoStr   "Imagegroups zero tbrcIntro" .
+
+bda:W1FPL1  a                  adm:AdminData ;
+        adm:access             bda:AccessOpen ;
+        adm:adminAbout         bdr:W1FPL1 ;
+        adm:contentLegal       bda:LD_BDRC_PD ;
+        adm:facetIndex         4 ;
+        adm:gitPath            "56/W1FPL1.trig" ;
+        adm:gitRepo            bda:GR0014 ;
+        adm:gitRevision        "acfaa2596529a6bdb2f5a0363234b991192c0a49" ;
+        adm:graphId            bdg:W1FPL1 ;
+        adm:metadataLegal      bda:LD_BDRC_CC0 ;
+        adm:restrictedInChina  false ;
+        adm:status             bda:StatusReleased ;
+        bdo:isRoot             true .
+
+bdr:W1FPL1  a                       bdo:ImageInstance ;
+        bdo:instanceHasVolume       bdr:I1FPL1 ;
+        bdo:instanceOf              bdr:WA1FPL1 ;
+        bdo:instanceReproductionOf  bdr:MW1FPL1 ;
+        bdo:isRoot                  true ;
+        bdo:itemVolumes             1 .
+
+bda:I1FPL1  a                    adm:AdminData ;
+        adm:adminAbout           bdr:I1FPL1 ;
+        adm:legacyImageGroupRID  "I1FPL1" ;
+        adm:logEntry             bda:LGCA8A078F7C17D70A , bda:LG17264A7631C76E1C , bda:LG092D25F3B2D03EBF ;
+        adm:metadataLegal        bda:LD_BDRC_CC0 ;
+        adm:status               bda:StatusReleased .
+
+bdr:I1FPL1  a                     bdo:ImageGroup ;
+        bdo:imageCount            181 ;
+        bdo:imageList             "I1FPL10001.jpg:181" ;
+        bdo:volumeNumber          1 ;
+        bdo:volumeOf              bdr:W1FPL1 ;
+        bdo:volumePagesTbrcIntro  0 ;
+        bdo:volumePagesTotal      181 .

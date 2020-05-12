@@ -111,6 +111,7 @@ bdr:GenderMale
 bdr:P705  
   a                  bdo:Person ;
   bdo:personGender   bdr:GenderMale ;
+  bdo:personName     bdr:NM0895CB6787E8AC6E ;
 .
 #        bdo:personName       bdr:NM0895CB6787E8AC6E ;
 
@@ -120,7 +121,7 @@ bdr:P705
 ##
 bdr:NMC2A097019ABA499F
         a           bdo:PersonPrimaryName ;
-        skos:prefLabel  "dri med 'od zer/"@bo-x-ewts ;
+        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
 .
 #        a           bdo:PersonPrimaryName ;
 #        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
