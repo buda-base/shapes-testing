@@ -35,7 +35,8 @@ public class Jena_Shacl01_validateGraph {
     
     static final String BDG = "http://purl.bdrc.io/graph/";
     static final String BDR = "http://purl.bdrc.io/resource/";
-//    static final String SHAPES = "PersonShapes_BASE.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal8";
+    static final String ONT_GRAPH = "http://ldspdi-dev.bdrc.io/graph/ontologySchema.ttl";
     static final String SHAPES_REPO = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/";
     static final String SHAPES = SHAPES_REPO+"person.shapes.ttl";
     static final String REZ_NM = "P707";
