@@ -1,0 +1,113 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix PersonShapes: <http://purl.bdrc.io/shapes/core/PersonShapes/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix tosh:  <http://topbraid.org/tosh#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+
+bds:EntityShape-isRoot a sh:PropertyShape ;
+    sh:path bdo:isRoot ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:message "focusNode must have :isRoot true" ;
+.
+bds:EntityShape
+    sh:property bds:EntityShape-isRoot ;
+.
+
+bds:Pfx_rdf 
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "rdf" ;
+        sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+    ] ;
+.
+bds:Pfx_bdo
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "bdo" ;
+        sh:namespace "http://purl.bdrc.io/ontology/core/" ;
+    ] ;
+.
+
+bds:CheckPersonClassShape  a      sh:NodeShape ;
+    rdfs:label      "Check Person Class Shape"@en ;
+    sh:targetSubjectsOf bdo:isRoot ;
+    sh:message "focusNode must be a bdo:Person" ;
+    sh:sparql [
+      a sh:SPARQLConstraint ;
+      sh:prefixes bds:Pfx_rdf , bds:Pfx_bdo ;
+      sh:select """
+        select distinct $this
+        where {
+             filter not exists { $this rdf:type bdo:Person . } .
+        }	  
+      """ ;
+    ] ;
+.
+
+bds:PersonShape  a      sh:NodeShape ;
+    rdfs:label      "Person Shape"@en ;
+    sh:property     bds:PersonShape-gender ,
+                    bds:PersonShape-personName ,
+                    bds:EntityShape-isRoot ;
+    sh:targetClass  bdo:Person ;
+.
+
+bds:PersonShape-personName
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonName ;
+        sh:description  "this Person may have one or more names."@en ;
+        sh:message      "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+        sh:minCount     1 ;
+        sh:node         bds:PersonNameShape ;
+        sh:nodeKind     sh:IRI ;
+        sh:path         bdo:personName ;
+.
+
+bds:PersonNameShape  a  sh:NodeShape ;
+        bds:shapeType   bds:FacetShape ;
+        rdfs:label      "Person Name Shape"@en ;
+        sh:message      "must be subClassOf* :PersonName"@en ;
+        sh:property     bds:PersonNameShape-personNameLabel ;
+        sh:targetClass  bdo:PersonName ;
+.
+
+bds:PersonNameShape-personNameLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "this Person has a name given by the label."@en ;
+        sh:message      ":PersonName must have exactly one rdfs:label"@en ;
+        sh:maxCount     1 ;
+        sh:minCount     1 ;
+        sh:path         rdfs:label ;
+.
+
+bds:PersonShape-genderMale
+        a            sh:PropertyShape ;
+        sh:hasValue  bdr:GenderMale ;
+        sh:maxCount  1 ;
+        sh:minCount  1 ;
+        sh:path      bdo:personGender ;
+.
+
+bds:PersonShape-gender
+        a               sh:PropertyShape ;
+        sh:class        bdo:Gender ;
+        sh:description  "this Person may have at most one Gender or none if not known."@en ;
+        sh:group        bds:IdentityPropertyGroup ;
+        sh:maxCount     1 ;
+        sh:path         bdo:personGender ;
+.
+
+bds:MaleShape  a     sh:NodeShape ;
+        rdfs:label   "Male Shape"@en ;
+        sh:property  bds:PersonShape-genderMale ;
+.

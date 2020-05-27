@@ -40,9 +40,11 @@ public class Jena_Shacl03_validateGraph {
     static final String RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     static final String SH = "http://www.w3.org/ns/shacl#";
 
-    static final String SHAPES = "PersonLocalShapes_BASE.ttl";
+//    static final String SHAPES = "PersonLocalShapes_BASE.ttl";
 //    static final String SHAPES = "PersonLocalShapes_ALL.ttl";
 //    static final String SHAPES = "PersonShapes_BASE_minimal9.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal10.ttl";
+    static final String SHAPES = "PersonShapes_BASE_minimal11.ttl";
 //    static final String SHAPES_REPO = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/";
 //    static final String SHAPES = SHAPES_REPO+"person.shapes.ttl";
     
