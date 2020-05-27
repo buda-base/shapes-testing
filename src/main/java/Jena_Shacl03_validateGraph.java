@@ -39,13 +39,30 @@ public class Jena_Shacl03_validateGraph {
     static final String BDS = "http://purl.bdrc.io/ontology/shapes/core/";
     static final String RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     static final String SH = "http://www.w3.org/ns/shacl#";
-    static final String SHAPES = "PersonShapes_BASE_minimal8-deact.ttl";
-    static final String ONT_GRAPH = "http://ldspdi-dev.bdrc.io/graph/ontologySchema.ttl";
+
+    static final String SHAPES = "PersonLocalShapes_BASE.ttl";
+//    static final String SHAPES = "PersonLocalShapes_ALL.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal9.ttl";
 //    static final String SHAPES_REPO = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/";
 //    static final String SHAPES = SHAPES_REPO+"person.shapes.ttl";
+    
+    static final String ONT_GRAPH = "http://purl.bdrc.io/graph/ontologySchema.ttl";
+
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "";
+    static final String DATA_VER = "_nameErrs";
     static final String DATA = REZ_NM+DATA_VER+".ttl";
+    
+    static ShaclValidator sv = ShaclValidator.get();
+    
+    static void process(Shapes shapes, Graph dataGraph, Resource rez) {
+
+        logger.info("Validating Node {} with {}", rez.getLocalName(), SHAPES);
+        ValidationReport report = sv.validate(shapes, dataGraph, rez.asNode());
+        Model reportModel = report.getModel();
+
+        logger.info("PRINTING report.getModel().ttl");
+        RDFDataMgr.write(System.out, reportModel, Lang.TTL);
+    }
     
     public static void main(String ...args) {
 
@@ -59,15 +76,18 @@ public class Jena_Shacl03_validateGraph {
 
         logger.info("PARSING {}", SHAPES);
         Shapes shapes = Shapes.parse(shapesGraph);
+
+        Resource nm1 = ResourceFactory.createResource(BDR+"NMC2A097019ABA499F");
+        Resource nm2 = ResourceFactory.createResource(BDR+"NM0895CB6787E8AC6E");
+        Resource nm3 = ResourceFactory.createResource(BDR+"NM2463D933BA1F9A38");
+        Resource nm4 = ResourceFactory.createResource(BDR+"NMEA2B380AF0BBFB1B");
         
-        ShaclValidator sv = ShaclValidator.get();
-
         Resource rez = ResourceFactory.createResource(BDR+REZ_NM);
-        logger.info("Validating Node {} with {}", rez.getLocalName(), SHAPES);
-        ValidationReport report = sv.validate(shapes, dataGraph, rez.asNode());
-        Model reportModel = report.getModel();
-
-        logger.info("PRINTING report.getModel().ttl");
-        RDFDataMgr.write(System.out, reportModel, Lang.TTL);
+        
+        process(shapes, dataGraph, rez);
+        process(shapes, dataGraph, nm1);
+        process(shapes, dataGraph, nm2);
+        process(shapes, dataGraph, nm3);
+        process(shapes, dataGraph, nm4);
     }
 }

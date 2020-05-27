@@ -25,6 +25,7 @@ public class OntTestLoading2 {
     
     private static final String BDG = "http://purl.bdrc.io/graph/";
     private static final String PERSON_SHAPES = "http://purl.bdrc.io/shapes/core/PersonShapes/";
+    private static final String PERSON_LOCAL_SHAPES = "http://purl.bdrc.io/shapes/core/PersonLocalShapes/";
     private static final String PERSON_UI_SHAPES = "http://purl.bdrc.io/shapes/core/PersonUIShapes/";
     
     private static OntModelSpec oms;
@@ -53,7 +54,7 @@ public class OntTestLoading2 {
 //    }
     
     private static void doTest(String ontUri, boolean processImports, String graphLocalName) {
-        doTest(oms, odm, ontUri, processImports, graphLocalName, true);
+        doTest(oms, odm, ontUri, processImports, graphLocalName, false);
     }
     
     private static void doTest(String ontUri, boolean processImports, String graphLocalName, boolean rt) {
@@ -85,9 +86,10 @@ public class OntTestLoading2 {
         
         if (rt) {
             // send OntModel to Fuseki and retrieve Model by graph name
-            String graphName = BDG+graphLocalName;
+            String graphName = BDG+graphLocalName+"_TMP";
             fuConn.put(graphName, om);
             Model mFmFu = fuConn.fetch(graphName);
+            fuConn.delete(graphName);
             writeTtl(mFmFu, graphLocalName+"_MODEL_FM_FUSEKI");
         }
     }
@@ -96,13 +98,21 @@ public class OntTestLoading2 {
         
         fuConn = RDFConnectionFuseki.create().destination(DS).build();        
 
-        // PROCESS IMPORTS FALSE
-        initOdm();
-        doTest(PERSON_SHAPES, false, "PersonShapes_BASE02");        
+//        // PROCESS IMPORTS FALSE
+//        initOdm();
+//        doTest(PERSON_LOCAL_SHAPES, false, "PersonLocalShapes_BASE");        
+//
+//        // PROCESS IMPORTS TRUE
+//        initOdm();        
+//        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL");
+
+//        // PROCESS IMPORTS FALSE
+//        initOdm();
+//        doTest(PERSON_SHAPES, false, "PersonShapes_BASE03");
 
         // PROCESS IMPORTS TRUE
-        initOdm();        
-        doTest(PERSON_SHAPES, true, "PersonShapes_ALL02");
+        initOdm();
+        doTest(PERSON_SHAPES, true, "PersonShapes_ALL03");
 
 //        // PROCESS IMPORTS FALSE
 //        initOdm();

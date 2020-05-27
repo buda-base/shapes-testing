@@ -1,0 +1,74 @@
+[main] INFO Jena_Shacl01_validateGraph - PARSING PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - Validating Node P707 with PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING report.getModel().ttl
+
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:P707 ;
+                 sh:resultMessage              ":personName object is not well-formed :PersonName, wrong Class or missing rdfs:label" ;
+                 sh:resultPath                 bdo:personName ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:NodeConstraintComponent ;
+                 sh:sourceShape                bds:PersonShape-personName ;
+                 sh:value                      bdr:NM0895CB6787E8AC6E
+               ]
+] .
+
+
+
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NMC2A097019ABA499F with PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING report.getModel().ttl
+
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  true
+] .
+
+
+
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NM0895CB6787E8AC6E with PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING report.getModel().ttl
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  true
+] .
+
+
+
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NM2463D933BA1F9A38 with PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING report.getModel().ttl
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  true
+] .
+
+
+
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NMEA2B380AF0BBFB1B with PersonLocalShapes_BASE.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING report.getModel().ttl
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  true
+] .
