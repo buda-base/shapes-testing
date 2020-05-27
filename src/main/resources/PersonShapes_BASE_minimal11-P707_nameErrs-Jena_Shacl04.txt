@@ -1,0 +1,58 @@
+[main] INFO Jena_Shacl01_validateGraph - PARSING PersonShapes_BASE_minimal11.ttl
+[main] INFO Jena_Shacl01_validateGraph - Validating Node P707 with PersonShapes_BASE_minimal11.ttl
+[main] INFO Jena_Shacl01_validateGraph - completeReport, valStmt: [eb591aa1-5d9c-49c6-a958-156bbea3b871, http://www.w3.org/ns/shacl#value, http://purl.bdrc.io/resource/NMC2A097019ABA499F],  val: http://purl.bdrc.io/resource/NMC2A097019ABA499F
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NMC2A097019ABA499F with PersonShapes_BASE_minimal11.ttl
+[main] INFO Jena_Shacl01_validateGraph - completeReport, valStmt: [842c6fd5-2b81-400b-868a-a66407f82659, http://www.w3.org/ns/shacl#value, http://purl.bdrc.io/resource/NM0895CB6787E8AC6E],  val: http://purl.bdrc.io/resource/NM0895CB6787E8AC6E
+[main] INFO Jena_Shacl01_validateGraph - Validating Node NM0895CB6787E8AC6E with PersonShapes_BASE_minimal11.ttl
+[main] INFO Jena_Shacl01_validateGraph - PRINTING finalReport
+
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:P707 ;
+                 sh:resultMessage              "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+                 sh:resultPath                 bdo:personName ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:NodeConstraintComponent ;
+                 sh:sourceShape                bds:PersonShape-personName ;
+                 sh:value                      bdr:NM0895CB6787E8AC6E
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:P707 ;
+                 sh:resultMessage              "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+                 sh:resultPath                 bdo:personName ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                bds:PersonShape-personName ;
+                 sh:value                      bdr:NMC2A097019ABA499F
+               ]
+] .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:NMC2A097019ABA499F ;
+                 sh:resultMessage              "focusNode must be subClassOf* bdo:PersonName" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent ;
+                 sh:sourceShape                bds:CheckPersonNameClass ;
+                 sh:value                      bdr:NMC2A097019ABA499F
+               ]
+] .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:NM0895CB6787E8AC6E ;
+                 sh:resultMessage              ":PersonName must have exactly one rdfs:label"@en ;
+                 sh:resultPath                 rdfs:label ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                bds:PersonNameShape-personNameLabel
+               ]
+] .
