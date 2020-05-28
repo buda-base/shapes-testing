@@ -1,0 +1,35 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+
+bdr:NMC2A097019ABA499F
+        a           bdo:FruitCake ;
+        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NM0895CB6787E8AC6E
+        a           bdo:PersonPrimaryTitle ;
+        skos:prefLabel  "sprul sku dri med/"@bo-x-ewts ;
+.
+
+bdr:NM2463D933BA1F9A38
+        a           bdo:PersonPrimaryTitle ;
+        rdfs:label  "bdud 'joms gter sras dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NMEA2B380AF0BBFB1B
+        a           bdo:PersonGterStonTitle ;
+        rdfs:label  "pad+ma 'gro 'dul gsang sngags gling pa/"@bo-x-ewts ;
+.
+
+bdr:P707  a                  bdo:Person ;
+        bdo:hasFather        bdr:P707 ;
+        bdo:hasParent        bdr:P705 ;
+        bdo:isRoot           true ;
+        bdo:kinWith          bdr:P705 ;
+        bdo:personGender     bdr:GenderMale ;
+        bdo:personName       bdr:NM0895CB6787E8AC6E , bdr:NM2463D933BA1F9A38 , bdr:NMEA2B380AF0BBFB1B , bdr:NMC2A097019ABA499F ;
+        skos:prefLabel       "dri med 'od zer/"@bo-x-ewts ;
+.

@@ -54,16 +54,23 @@ public class Jena_Shacl04_validateGraph {
 
 //    static final String SHAPES = "PersonLocalShapes_BASE.ttl";
 //    static final String SHAPES = "PersonLocalShapes_ALL.ttl";
+//    static final String SHAPES = "PersonLocalShapes_ALL02.ttl";
+//    static final String SHAPES = "PersonLocalShapes_ALL03.ttl";
 //    static final String SHAPES = "PersonShapes_BASE_minimal9.ttl";
 //    static final String SHAPES = "PersonShapes_BASE_minimal10.ttl";
-    static final String SHAPES = "PersonShapes_BASE_minimal11.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal11.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal12.ttl";
+//    static final String SHAPES = "PersonShapes_BASE_minimal13.ttl";
+    static final String SHAPES = "ShapeName_01.ttl";
 //    static final String SHAPES_REPO = "https://raw.githubusercontent.com/buda-base/editor-templates/master/templates/core/";
 //    static final String SHAPES = SHAPES_REPO+"person.shapes.ttl";
     
     static final String ONT_GRAPH = "http://purl.bdrc.io/graph/ontologySchema.ttl";
 
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_nameErrs";
+//    static final String DATA_VER = "_nameErrs";
+    static final String DATA_VER = "_nameErrs02";
+//    static final String DATA_VER = "_nameErrs_noRoot";
     static final String DATA = REZ_NM+DATA_VER+".ttl";
     
     static ShaclValidator sv = ShaclValidator.get();

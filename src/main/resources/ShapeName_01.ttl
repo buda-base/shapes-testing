@@ -1,0 +1,73 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+
+bds:PersonShape  
+    a               sh:NodeShape ;
+    rdfs:label      "Person Shape"@en ;
+    sh:property     bds:PersonShape-personName ;
+    sh:targetClass  bdo:Person ;
+.
+bds:Pfx_rdf 
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "rdf" ;
+        sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+    ] ;
+.
+bds:Pfx_rdfs
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "rdfs" ;
+        sh:namespace "http://www.w3.org/2000/01/rdf-schema#" ;
+    ] ;
+.
+bds:Pfx_bdo
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "bdo" ;
+        sh:namespace "http://purl.bdrc.io/ontology/core/" ;
+    ] ;
+.
+bds:CheckPersonNameClass  
+    a      sh:NodeShape ;
+    rdfs:label      "Check PersonName Class Shape"@en ;
+    sh:targetObjectsOf bdo:personName ;
+    sh:message "focusNode must be subClassOf* bdo:PersonName" ;
+    sh:sparql [
+      a sh:SPARQLConstraint ;
+      sh:prefixes bds:Pfx_rdf , bds:Pfx_rdfs , bds:Pfx_bdo ;
+      sh:select """
+        select distinct $this
+        where {
+            $this rdf:type ?type .
+            filter not exists { ?type rdfs:subClassOf* bdo:PersonName . } .
+        }	  
+      """ ;
+    ] ;
+.
+bds:PersonShape-personName
+    a               sh:PropertyShape ;
+    sh:class        bdo:PersonName ;
+    sh:message      "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+    sh:minCount     1 ;
+    sh:node         bds:PersonNameShape ;
+    sh:nodeKind     sh:IRI ;
+    sh:path         bdo:personName ;
+.
+bds:PersonNameShape  a  sh:NodeShape ;
+    sh:property     bds:PersonNameShape-personNameLabel ;
+    sh:targetClass  bdo:PersonName ;
+.
+bds:PersonNameShape-personNameLabel
+    a               sh:PropertyShape ;
+    sh:datatype     rdf:langString ;
+    sh:message      ":PersonName must have exactly one rdfs:label"@en ;
+    sh:maxCount     1 ;
+    sh:minCount     1 ;
+    sh:path         rdfs:label ;
+.
