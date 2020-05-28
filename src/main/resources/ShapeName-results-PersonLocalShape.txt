@@ -1,0 +1,48 @@
+[main] INFO ShaclName_validateGraph - Validating Node P707 with ShapeName_01.ttl
+[main] INFO ShaclName_validateGraph - Validating Node NMC2A097019ABA499F with ShapeName_01.ttl
+[main] INFO ShaclName_validateGraph - Validating Node NM0895CB6787E8AC6E with ShapeName_01.ttl
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:P707 ;
+                 sh:resultMessage              "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+                 sh:resultPath                 bdo:personName ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:NodeConstraintComponent ;
+                 sh:sourceShape                bds:PersonShape-personName ;
+                 sh:value                      bdr:NM0895CB6787E8AC6E
+               ] ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:P707 ;
+                 sh:resultMessage              "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+                 sh:resultPath                 bdo:personName ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent ;
+                 sh:sourceShape                bds:PersonShape-personName ;
+                 sh:value                      bdr:NMC2A097019ABA499F
+               ]
+] .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ a                             sh:ValidationResult ;
+                 sh:focusNode                  bdr:NMC2A097019ABA499F ;
+                 sh:resultMessage              "focusNode must be subClassOf* bdo:PersonName" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent ;
+                 sh:sourceShape                bds:CheckPersonNameClass ;
+                 sh:value                      bdr:NMC2A097019ABA499F
+               ]
+] .
+
+[ a            sh:ValidationReport ;
+  sh:conforms  true
+] .
