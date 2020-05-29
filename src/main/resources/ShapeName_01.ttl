@@ -6,7 +6,7 @@
 @prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
 @prefix bdr:   <http://purl.bdrc.io/resource/> .
 
-bds:PersonLocalShape
+bds:PersonShape
     a               sh:NodeShape ;
     rdfs:label      "Person Shape"@en ;
     sh:property     bds:PersonShape-personName ;
