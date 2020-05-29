@@ -1,0 +1,112 @@
+0 = ShapeName02-results-PersonLocalShape.txt
+1 = ShapeName02-results-PersonShape.txt
+
+A                  1
+a                  1
+W                  1
+w                  1
+AA                 1
+Aa                 1
+AB                 0
+Ab                 0
+Ac                 0
+Ad                 0
+Ae                 0
+Aaa                0
+Aba                1
+Abb                0
+Abc                1
+Acc                0
+Aaaa               1
+Aaab               1
+Abca               1
+Abcb               1
+Abcc               1
+Abcd               1
+Wxyz               1
+WXYZ               0
+P                  1
+Pe                 1
+Per                0
+Pers               1
+Perso              1
+Person             0
+PersonS            0
+PersonSh           1
+PersonSha          1
+PersonShap         1
+PersonShape        1
+PersonShaper       1
+PersonShapers      0
+PersonShapersl     1
+PersonShapersly    1
+PersonL            1
+PersonLo           1
+PersonLoc          1
+PersonLoca         1
+PersonLocal        1
+PersonLocalS       1
+PersonLocalSh      1
+PersonLocalSha     1
+PersonLocalShap    0
+PersonLocalShape   0
+PersonLocalShaper  1
+PersonLocalShapers 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+P                  1
+Pe                 1
+Per                0
+Pers               1
+Perso              1
+Person             0
+PersonL            1
+PersonS            0
+PersonLo           1
+PersonSh           1
+PersonLoc          1
+PersonSha          1
+PersonLoca         1
+PersonShap         1
+PersonLocal        1
+PersonShape        1
+PersonLocalS       1
+PersonShaper       1
+PersonLocalSh      1
+PersonShapers      0
+PersonLocalSha     1
+PersonShapersl     1
+PersonLocalShap    0
+PersonShapersly    1
+PersonLocalShape   0
+PersonLocalShaper  1
+PersonLocalShapers 1
+
+
+
+
+
+
+
+
+
+
+
+

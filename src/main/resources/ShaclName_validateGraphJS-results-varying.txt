@@ -1,0 +1,42 @@
+0 = ShapeName02-results-PersonLocalShape.txt
+1 = ShapeName02-results-PersonShape.txt
+
+P                  1
+Pe                 1
+Per                0
+Pers               1
+Perso              1
+Person             0
+PersonL            1
+PersonS            0
+PersonLo           1
+PersonSh           1
+PersonLoc          1
+PersonSha          1
+PersonLoca         1
+PersonShap         1
+PersonLocal        1
+PersonShape        1
+PersonLocalS       1
+PersonShaper       1
+PersonLocalSh      1
+PersonShapers      0
+PersonLocalSha     1
+PersonShapersl     1
+PersonLocalShap    0
+PersonShapersly    1
+PersonLocalShape   0
+PersonLocalShaper  1
+PersonLocalShapers 0
+
+
+
+
+
+
+
+
+
+
+
+
