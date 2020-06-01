@@ -1,0 +1,41 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+
+## Data:
+
+bdr:NM0895CB6787E8AC6E
+        a           bdo:PersonName ;
+.
+
+bdr:P707  a                  bdo:Person ;
+       bdo:personName       bdr:NM0895CB6787E8AC6E ;
+.
+
+## Shapes:
+
+#bds:PersonLocalShape      # 1
+bds:PersonShape           # 2
+   sh:property     bds:PersonShape-personName ;
+   sh:targetClass  bdo:Person ;
+.
+
+bds:PersonShape-personName
+   sh:message      "PersonName is not well-formed, wrong Class or missing rdfs:label"@en ;
+   sh:node         bds:PersonNameShape ;
+   sh:path         bdo:personName ;
+.
+
+bds:PersonNameShape  a  sh:NodeShape ;
+   sh:property     bds:PersonNameShape-personNameLabel ;
+   sh:targetClass  bdo:PersonName ;
+.
+
+bds:PersonNameShape-personNameLabel
+   sh:message      ":PersonName must have exactly one rdfs:label"@en ;
+   sh:minCount     1 ;
+   sh:path         rdfs:label ;
+.
