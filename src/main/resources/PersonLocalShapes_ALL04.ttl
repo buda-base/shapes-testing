@@ -1,0 +1,419 @@
+@prefix bf:    <http://id.loc.gov/ontologies/bibframe/> .
+@prefix tbr:   <http://purl.bdrc.io/ontology/toberemoved/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix PersonLocalShapes: <http://purl.bdrc.io/shapes/core/PersonLocalShapes/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix EventShapes: <http://purl.bdrc.io/shapes/core/EventShapes/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix bda:   <http://purl.bdrc.io/admin.data/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix cc:    <http://creativecommons.org/ns#> .
+@prefix BaseShapes: <http://purl.bdrc.io/shapes/core/BaseShapes/> .
+@prefix bdd:   <http://purl.bdrc.io/data/> .
+@prefix bdg:   <http://purl.bdrc.io/graph/> .
+@prefix RootShapes: <http://purl.bdrc.io/shapes/core/RootShapes/> .
+@prefix tosh:  <http://topbraid.org/tosh#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix adm:   <http://purl.bdrc.io/ontology/admin/> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix iiif2: <http://iiif.io/api/presentation/2#> .
+@prefix iiif3: <http://iiif.io/api/presentation/3#> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix swa:   <http://topbraid.org/swa#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix bdsa:  <http://purl.bdrc.io/ontology/shapes/adm/> .
+
+bds:CheckPersonNameClass
+        a                   sh:NodeShape ;
+        rdfs:label          "Check PersonName Class Shape"@en ;
+        sh:message          "focusNode must be subClassOf* bdo:PersonName" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:BDO , bds:RDFS , bds:RDF ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:PersonName . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personName .
+
+bds:PersonShape-personName
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonName ;
+        sh:description  "this Person may have one or more names."@en ;
+        sh:message      "There must be at least one :personName object and each must be an IRI - no blank nodes"@en ;
+        sh:minCount     1 ;
+        sh:nodeKind     sh:IRI ;
+        sh:path         bdo:personName .
+
+bds:PersonEventShape  a    sh:NodeShape ;
+        rdfs:label         "Person Event Shape"@en ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:property        bds:PersonEventShape-personEventType , bds:PersonEventShape-personEventRole ;
+        sh:targetClass     bdo:PersonEvent .
+
+bds:PersonEventShape-personEventRole
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:Role ;
+        sh:maxCount  1 ;
+        sh:message   "At most one PersonEventRole allowed"@en ;
+        sh:name      "role associated with the event"@en ;
+        sh:path      bdo:personEventRole .
+
+bds:CheckPersonEventClass
+        a                   sh:NodeShape ;
+        rdfs:label          "Check PersonEvent Class Shape"@en ;
+        sh:message          "focusNode must be subClassOf* bdo:PersonEvent" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:BDO , bds:RDFS , bds:RDF ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:PersonEvent . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personEvent .
+
+bds:PersonShape-gender
+        a               sh:PropertyShape ;
+        sh:class        bdo:Gender ;
+        sh:description  "this Person may have at most one Gender or none if not known."@en ;
+        sh:maxCount     1 ;
+        sh:message      "At most one bdo:gender allowed"@en ;
+        sh:path         bdo:personGender .
+
+bds:PersonShape-personEvent
+        a               sh:PropertyShape ;
+        sh:class        bdo:PersonEvent ;
+        sh:description  "this Person may have zero or more events like birth, death, ordination."@en ;
+        sh:message      "Each PersonEvent must be an IRI - no blank nodes"@en ;
+        sh:nodeKind     sh:IRI ;
+        sh:path         bdo:personEvent .
+
+bds:PersonNameShape-personNameLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "this Person has a name given by the label."@en ;
+        sh:maxCount     1 ;
+        sh:message      "A PersonName must have exactly one rdfs:label"@en ;
+        sh:minCount     1 ;
+        sh:path         rdfs:label .
+
+PersonLocalShapes:  a    owl:Ontology ;
+        owl:imports      EventShapes: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "SHACL constraints for a internal elements of a Person graph" .
+
+bds:CheckPersonClass  a      sh:NodeShape ;
+        rdfs:label           "Check Person Class Shape"@en ;
+        sh:message           "focusNode must be a bdo:Person" ;
+        sh:sparql            [ a            sh:SPARQLConstraint ;
+                               sh:prefixes  bds:BDO , bds:RDF ;
+                               sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Person . } .\n        }\t  \n      "
+                             ] ;
+        sh:targetSubjectsOf  bdo:isRoot .
+
+bds:PersonEventShape-personEventType
+        a            sh:PropertyShape ;
+        dash:editor  dash:InstancesSelectEditor ;
+        sh:class     bdo:PersonEventType ;
+        sh:maxCount  1 ;
+        sh:message   "exactly one PersonEventType required"@en ;
+        sh:minCount  1 ;
+        sh:name      "role associated with the event"@en ;
+        sh:path      bdo:eventType .
+
+bds:CheckGenderClass  a     sh:NodeShape ;
+        rdfs:label          "Check Gender Class Shape"@en ;
+        sh:message          "focusNode must be instance of bdo:Gender" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:BDO , bds:RDFS , bds:RDF ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Gender . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:gender .
+
+bdo:Person  bds:localShape   bds:PersonLocalShape ;
+        bds:localShapeGraph  bdg:PersonLocalShapes .
+
+bds:PersonNameShape  a     sh:NodeShape ;
+        rdfs:label         "Person Name Shape"@en ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:property        bds:PersonNameShape-personNameLabel ;
+        sh:targetClass     bdo:PersonName .
+
+bds:PersonShape  a            sh:NodeShape ;
+        rdfs:label            "Person Shape"@en ;
+        bds:identifierPrefix  "P" ;
+        bds:isLocalShape      true ;
+        sh:property           bds:PersonShape-personName , bds:PersonShape-gender , bds:PersonShape-personEvent ;
+        sh:targetClass        bdo:Person .
+
+EventShapes:  a          owl:Ontology ;
+        owl:imports      RootShapes: , bdo: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "Initial SHACL constraints for Events and its subclasses" .
+
+bdo:Event  bds:rootShape  bds:EventShape .
+
+bds:EventShape-eventText
+        a                sh:PropertyShape ;
+        dash:editor      dash:TextAreaWithLangEditor ;
+        dash:singleLine  false ;
+        sh:datatype      rdf:langString ;
+        sh:name          "event text"@en ;
+        sh:path          bdo:eventText .
+
+bds:EventShape-onOrAbout
+        a               sh:PropertyShape ;
+        sh:datatype     xsd:string ;
+        sh:description  "this property should not be used. Use on of the other 4 forms instead."@en ;
+        sh:maxCount     1 ;
+        sh:name         "event occurred on or about"@en ;
+        sh:path         bdo:onOrAbout .
+
+bds:EventShape-onDate
+        a            sh:PropertyShape ;
+        dash:editor  dash:DatePickerEditor ;
+        sh:datatype  xsd:date ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred on"@en ;
+        sh:path      bdo:onDate .
+
+bds:EventShape-notBefore
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred not before"@en ;
+        sh:path      bdo:notBefore .
+
+bds:EventShape-notAfter
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred not before"@en ;
+        sh:path      bdo:notAfter .
+
+bds:EventShape-eventWho
+        a                      sh:PropertyShape ;
+        dash:editor            dash:InstancesSelectEditor ;
+        bds:propertyShapeType  bds:ExternalShapeShape ;
+        sh:class               bdo:AgentInRole ;
+        sh:name                "who was involved in the event"@en ;
+        sh:path                bdo:eventWho .
+
+bds:EventShape  a             sh:NodeShape ;
+        rdfs:label            "Event Shape"@en ;
+        bds:identifierPrefix  "EV" ;
+        bds:nodeShapeType     bds:FacetShape ;
+        sh:property           bds:EventShape-onOrAbout , bds:EventShape-eventWhere , bds:EventShape-onDate , bds:EventShape-notAfter , bds:EventShape-onYear , bds:EventShape-notBefore , bds:EventShape-eventWho , bds:EventShape-eventText ;
+        sh:targetClass        bdo:Event .
+
+bds:EventShape-eventWhere
+        a                      sh:PropertyShape ;
+        dash:editor            dash:InstancesSelectEditor ;
+        bds:propertyShapeType  bds:ExternalShapeShape ;
+        sh:class               bdo:Place ;
+        sh:maxCount            1 ;
+        sh:name                "where event occurred"@en ;
+        sh:path                bdo:eventWhere .
+
+bds:EventShape-onYear
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:name      "event occurred during the year"@en ;
+        sh:path      bdo:onYear .
+
+bds:NoteShape  a              sh:NodeShape ;
+        bds:identifierPrefix  "NT" ;
+        bds:nodeShapeType     bds:FacetShape ;
+        sh:property           bds:NoteShape-noteType , bds:NoteShape-noteText , bds:NoteShape-noteSource , bds:NoteShape-contentLocation ;
+        sh:targetClass        bdo:Note .
+
+bds:topShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:localShape  a    owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   sh:NodeShape .
+
+bds:NoteShape-noteText
+        a            sh:PropertyShape ;
+        sh:datatype  rdf:langString ;
+        sh:minCount  0 ;
+        sh:path      bdo:noteText .
+
+bds:uiShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:localShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:EntityShape-note  a        sh:PropertyShape ;
+        bds:propertyShapeType  bds:FacetShape ;
+        sh:description         "Zero or more notes may be associated with an entity"@en ;
+        sh:minCount            0 ;
+        sh:node                bds:NoteShape ;
+        sh:nodeKind            sh:IRI ;
+        sh:path                bdo:note .
+
+bds:LabelShape  a       sh:NodeShape ;
+        rdfs:label      "Label Shape"@en ;
+        sh:property     bds:LabelShape-hasTranslation ;
+        sh:targetClass  bdo:Label .
+
+bds:LabelShape-hasTranslation
+        a               sh:PropertyShape ;
+        sh:class        bdo:Label ;
+        sh:description  "this Label may have zero or more tanslations"@en ;
+        sh:minCount     0 ;
+        sh:name         "label has translation"@en ;
+        sh:path         bdo:hasTranslation .
+
+bds:EntityShape-skos_prefLabel
+        a               sh:PropertyShape ;
+        sh:datatype     rdf:langString ;
+        sh:description  "require unique language from among the listed choices"@en ;
+        sh:languageIn   ( "en" "zh" "bo" "bo-x-ewts" ) ;
+        sh:minCount     1 ;
+        sh:name         "pref label"@en ;
+        sh:order        "1"^^xsd:decimal ;
+        sh:path         skos:prefLabel ;
+        sh:uniqueLang   true .
+
+bds:topShape  a      owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   sh:NodeShape .
+
+bds:uiShape  a       owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   sh:NodeShape .
+
+RootShapes:  a           owl:Ontology ;
+        owl:imports      bdo: , BaseShapes: , <http://datashapes.org/dash> ;
+        owl:versionInfo  "Initial SHACL constraints" .
+
+bds:isTopShape  a    owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   xsd:boolean .
+
+bds:NoteShape-noteType
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:minCount  0 ;
+        sh:path      bdo:noteType .
+
+bds:NoteShape-noteSource
+        a            sh:PropertyShape ;
+        sh:class     bdo:BiblioEntity ;
+        sh:minCount  0 ;
+        sh:path      bdo:noteSource .
+
+bds:isUIShape  a     owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   xsd:boolean .
+
+bds:NoteShape-contentLocation
+        a            sh:PropertyShape ;
+        sh:class     bdo:ContentLocation ;
+        sh:minCount  0 ;
+        sh:path      bdo:contentLocation .
+
+bds:EntityShape  a         sh:NodeShape ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:name            "Entity shape"@en ;
+        sh:property        bds:EntityShape-note , bds:EntityShape-skos_prefLabel ;
+        sh:targetClass     bdo:Entity .
+
+bds:isLocalShape  a  owl:ObjectProperty ;
+        rdfs:domain  bds:NodeShape ;
+        rdfs:range   xsd:boolean .
+
+bds:RDFS  a         sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://www.w3.org/2000/01/rdf-schema#" ;
+                      sh:prefix     "rdfs"
+                    ] .
+
+bds:identifierPrefix  a  owl:DatatypeProperty ;
+        rdfs:domain      rdfs:Resource ;
+        rdfs:label       "prefix for resource id"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "prefix to use when generating identifier for a resource"@en .
+
+bds:BDR  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://purl.bdrc.io/resource/" ;
+                      sh:prefix     "bdr"
+                    ] .
+
+bds:IgnoreShape  a       bds:ShapeType ;
+        rdfs:label       "node shape is ignored for editing"@en ;
+        skos:definition  "this shape indicates internal resource that is not editable"@en .
+
+bds:ExternalShape  a     bds:ShapeType ;
+        rdfs:label       "node shape refers to resource external to focus node graph"@en ;
+        skos:definition  "this shape indicates external resource that is not contained in the focus node graph"@en .
+
+bds:SortDirection  a  owl:Class .
+
+bds:SortAscending  a     bds:SortDirection ;
+        rdfs:label       "sort ascending"@en ;
+        skos:definition  "items should be sorted in ascending order"@en .
+
+bds:ShapeType  a  owl:Class .
+
+bds:FacetShape  a        bds:ShapeType ;
+        rdfs:label       "node shape is a facet"@en ;
+        skos:definition  "this shape applies to a resource contained in the graph of root Resource that is a facet of the containing resource"@en .
+
+bds:propertyShapeType
+        a                owl:ObjectProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "node shape type"@en ;
+        rdfs:range       bds:ShapeType ;
+        skos:definition  "type of a node shape to discriminate among fact shapes, internal shapes, and so on"@en .
+
+bds:BDO  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://purl.bdrc.io/ontology/core/" ;
+                      sh:prefix     "bdo"
+                    ] .
+
+bds:increment  a         owl:DatatypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "increment by"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "an amount to increment the value of the sh:path property by"@en .
+
+bds:sortRank  a          owl:DatatypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "sort rank"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "values of the sh:path property are used to sort results before higher ranked properties."@en .
+
+bds:InternalShape  a     bds:ShapeType ;
+        rdfs:label       "node shape is internal"@en ;
+        skos:definition  "this shape applies to internal resources such as Volumes in an Imagegroup"@en .
+
+BaseShapes:  a           owl:Ontology ;
+        owl:imports      <http://datashapes.org/dash> ;
+        owl:versionInfo  "Buda extension to shacl vocabulary" .
+
+bds:sortDirection  a     owl:ObjecttypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "sort direction"@en ;
+        rdfs:range       bds:SortDirection ;
+        skos:definition  "values of the sh:path property are sorted in the specified direction."@en .
+
+bds:SortDescending  a    bds:SortDirection ;
+        rdfs:label       "sort descending"@en ;
+        skos:definition  "items should be sorted in descending order"@en .
+
+bds:RDF  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+                      sh:prefix     "rdf"
+                    ] .
+
+bds:nodeShapeType  a     owl:ObjectProperty ;
+        rdfs:domain      sh:NodeShape ;
+        rdfs:label       "node shape type"@en ;
+        rdfs:range       bds:ShapeType ;
+        skos:definition  "type of a node shape to discriminate among fact shapes, internal shapes, and so on"@en .

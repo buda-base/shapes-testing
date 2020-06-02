@@ -102,17 +102,17 @@ public class OntTestLoading2 {
 //        initOdm();
 //        doTest(PERSON_LOCAL_SHAPES, false, "PersonLocalShapes_BASE");        
 //
-//        // PROCESS IMPORTS TRUE
-//        initOdm();        
-//        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL");
+        // PROCESS IMPORTS TRUE
+        initOdm();        
+        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL04");
 
 //        // PROCESS IMPORTS FALSE
 //        initOdm();
 //        doTest(PERSON_SHAPES, false, "PersonShapes_BASE03");
 
-        // PROCESS IMPORTS TRUE
-        initOdm();
-        doTest(PERSON_SHAPES, true, "PersonShapes_ALL03");
+//        // PROCESS IMPORTS TRUE
+//        initOdm();
+//        doTest(PERSON_SHAPES, true, "PersonShapes_ALL03");
 
 //        // PROCESS IMPORTS FALSE
 //        initOdm();
