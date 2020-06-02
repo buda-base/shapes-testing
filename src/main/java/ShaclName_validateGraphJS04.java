@@ -21,7 +21,7 @@ public class ShaclName_validateGraphJS04 {
     static final String ONT_GRAPH = "http://purl.bdrc.io/graph/ontologySchema.ttl";
     static final String SHAPES = "PersonLocalShapes_ALL04.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_nameErrs_noRoot";
+    static final String DATA_VER = "_nameErrs";
     static final String DATA = REZ_NM+DATA_VER+".ttl";
     
     static ShaclValidator sv;

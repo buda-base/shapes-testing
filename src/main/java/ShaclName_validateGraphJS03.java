@@ -15,6 +15,8 @@ public class ShaclName_validateGraphJS03 {
     
     public static Logger logger = LoggerFactory.getLogger(ShaclName_validateGraphJS03.class);
     
+    static boolean printShapes = false;
+    
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String ONT_GRAPH = "http://purl.bdrc.io/graph/ontologySchema.ttl";
     static final String SHAPES = "PersonLocalShapes_ALL04.ttl";
@@ -40,7 +42,9 @@ public class ShaclName_validateGraphJS03 {
         
         shapesGraph = RDFDataMgr.loadGraph(SHAPES);
         shapes = Shapes.parse(shapesGraph);        
-        shapes.forEach(shape -> { shape.print(System.out); });
+        if (printShapes) {
+            shapes.forEach(shape -> { shape.print(System.out); });
+        }
         
         initSV();
     }
