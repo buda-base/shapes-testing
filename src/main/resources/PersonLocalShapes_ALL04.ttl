@@ -109,7 +109,7 @@ bds:CheckPersonClass  a      sh:NodeShape ;
                                sh:prefixes  bds:BDO , bds:RDF ;
                                sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Person . } .\n        }\t  \n      "
                              ] ;
-        sh:targetSubjectsOf  bdo:isRoot .
+        sh:targetSubjectsOf  bdo:personName .
 
 bds:CheckGenderClass  a     sh:NodeShape ;
         rdfs:label          "Check Gender Class Shape"@en ;
