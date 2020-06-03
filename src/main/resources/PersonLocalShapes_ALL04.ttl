@@ -9,7 +9,7 @@
 @prefix xml:   <http://www.w3.org/XML/1998/namespace> .
 @prefix EventShapes: <http://purl.bdrc.io/shapes/core/EventShapes/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix bda:   <http://purl.bdrc.io/admin.data/> .
+@prefix bda:   <http://purl.bdrc.io/admindata/> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix cc:    <http://creativecommons.org/ns#> .
 @prefix BaseShapes: <http://purl.bdrc.io/shapes/core/BaseShapes/> .
@@ -51,7 +51,7 @@ bds:PersonShape-personName
 bds:PersonEventShape  a    sh:NodeShape ;
         rdfs:label         "Person Event Shape"@en ;
         bds:nodeShapeType  bds:FacetShape ;
-        sh:property        bds:PersonEventShape-personEventType , bds:PersonEventShape-personEventRole ;
+        sh:property        bds:PersonEventShape-personEventRole ;
         sh:targetClass     bdo:PersonEvent .
 
 bds:PersonEventShape-personEventRole
@@ -73,12 +73,12 @@ bds:CheckPersonEventClass
                             ] ;
         sh:targetObjectsOf  bdo:personEvent .
 
-bds:PersonShape-gender
+bds:PersonShape-personGender
         a               sh:PropertyShape ;
         sh:class        bdo:Gender ;
         sh:description  "this Person may have at most one Gender or none if not known."@en ;
         sh:maxCount     1 ;
-        sh:message      "At most one bdo:gender allowed"@en ;
+        sh:message      "At most one bdo:personGender allowed"@en ;
         sh:path         bdo:personGender .
 
 bds:PersonShape-personEvent
@@ -111,16 +111,6 @@ bds:CheckPersonClass  a      sh:NodeShape ;
                              ] ;
         sh:targetSubjectsOf  bdo:isRoot .
 
-bds:PersonEventShape-personEventType
-        a            sh:PropertyShape ;
-        dash:editor  dash:InstancesSelectEditor ;
-        sh:class     bdo:PersonEventType ;
-        sh:maxCount  1 ;
-        sh:message   "exactly one PersonEventType required"@en ;
-        sh:minCount  1 ;
-        sh:name      "role associated with the event"@en ;
-        sh:path      bdo:eventType .
-
 bds:CheckGenderClass  a     sh:NodeShape ;
         rdfs:label          "Check Gender Class Shape"@en ;
         sh:message          "focusNode must be instance of bdo:Gender" ;
@@ -128,7 +118,7 @@ bds:CheckGenderClass  a     sh:NodeShape ;
                               sh:prefixes  bds:BDO , bds:RDFS , bds:RDF ;
                               sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Gender . } .\n        }\t  \n      "
                             ] ;
-        sh:targetObjectsOf  bdo:gender .
+        sh:targetObjectsOf  bdo:personGender .
 
 bdo:Person  bds:localShape   bds:PersonLocalShape ;
         bds:localShapeGraph  bdg:PersonLocalShapes .
@@ -143,7 +133,9 @@ bds:PersonShape  a            sh:NodeShape ;
         rdfs:label            "Person Shape"@en ;
         bds:identifierPrefix  "P" ;
         bds:isLocalShape      true ;
-        sh:property           bds:PersonShape-personName , bds:PersonShape-gender , bds:PersonShape-personEvent ;
+        sh:property           bds:PersonShape-personName , 
+                              bds:PersonShape-personGender , 
+                              bds:PersonShape-personEvent ;
         sh:targetClass        bdo:Person .
 
 EventShapes:  a          owl:Ontology ;
@@ -202,7 +194,14 @@ bds:EventShape  a             sh:NodeShape ;
         rdfs:label            "Event Shape"@en ;
         bds:identifierPrefix  "EV" ;
         bds:nodeShapeType     bds:FacetShape ;
-        sh:property           bds:EventShape-onOrAbout , bds:EventShape-eventWhere , bds:EventShape-onDate , bds:EventShape-notAfter , bds:EventShape-onYear , bds:EventShape-notBefore , bds:EventShape-eventWho , bds:EventShape-eventText ;
+        sh:property           bds:EventShape-onOrAbout , 
+                              bds:EventShape-eventWhere , 
+                              bds:EventShape-onDate , 
+                              bds:EventShape-notAfter , 
+                              bds:EventShape-onYear , 
+                              bds:EventShape-notBefore , 
+                              bds:EventShape-eventWho , 
+                              bds:EventShape-eventText ;
         sh:targetClass        bdo:Event .
 
 bds:EventShape-eventWhere
@@ -224,7 +223,10 @@ bds:EventShape-onYear
 bds:NoteShape  a              sh:NodeShape ;
         bds:identifierPrefix  "NT" ;
         bds:nodeShapeType     bds:FacetShape ;
-        sh:property           bds:NoteShape-noteType , bds:NoteShape-noteText , bds:NoteShape-noteSource , bds:NoteShape-contentLocation ;
+        sh:property           bds:NoteShape-noteType , 
+                              bds:NoteShape-noteText , 
+                              bds:NoteShape-noteSource , 
+                              bds:NoteShape-contentLocation ;
         sh:targetClass        bdo:Note .
 
 bds:topShapeGraph  a  owl:ObjectProperty ;
@@ -238,7 +240,7 @@ bds:localShape  a    owl:ObjectProperty ;
 bds:NoteShape-noteText
         a            sh:PropertyShape ;
         sh:datatype  rdf:langString ;
-        sh:minCount  0 ;
+        sh:message   "noteText must be an rdf:langString"@en ;
         sh:path      bdo:noteText .
 
 bds:uiShapeGraph  a  owl:ObjectProperty ;
@@ -252,7 +254,6 @@ bds:localShapeGraph  a  owl:ObjectProperty ;
 bds:EntityShape-note  a        sh:PropertyShape ;
         bds:propertyShapeType  bds:FacetShape ;
         sh:description         "Zero or more notes may be associated with an entity"@en ;
-        sh:minCount            0 ;
         sh:node                bds:NoteShape ;
         sh:nodeKind            sh:IRI ;
         sh:path                bdo:note .
@@ -266,7 +267,6 @@ bds:LabelShape-hasTranslation
         a               sh:PropertyShape ;
         sh:class        bdo:Label ;
         sh:description  "this Label may have zero or more tanslations"@en ;
-        sh:minCount     0 ;
         sh:name         "label has translation"@en ;
         sh:path         bdo:hasTranslation .
 
@@ -300,13 +300,11 @@ bds:isTopShape  a    owl:ObjectProperty ;
 bds:NoteShape-noteType
         a            sh:PropertyShape ;
         sh:datatype  xsd:string ;
-        sh:minCount  0 ;
         sh:path      bdo:noteType .
 
 bds:NoteShape-noteSource
         a            sh:PropertyShape ;
         sh:class     bdo:BiblioEntity ;
-        sh:minCount  0 ;
         sh:path      bdo:noteSource .
 
 bds:isUIShape  a     owl:ObjectProperty ;
@@ -316,7 +314,6 @@ bds:isUIShape  a     owl:ObjectProperty ;
 bds:NoteShape-contentLocation
         a            sh:PropertyShape ;
         sh:class     bdo:ContentLocation ;
-        sh:minCount  0 ;
         sh:path      bdo:contentLocation .
 
 bds:EntityShape  a         sh:NodeShape ;
