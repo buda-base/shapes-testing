@@ -106,10 +106,10 @@ bds:CheckPersonClass  a      sh:NodeShape ;
         rdfs:label           "Check Person Class Shape"@en ;
         sh:message           "focusNode must be a bdo:Person" ;
         sh:sparql            [ a            sh:SPARQLConstraint ;
-                               sh:prefixes  bds:BDO , bds:RDF ;
-                               sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Person . } .\n        }\t  \n      "
+                               sh:prefixes  bds:BDO , bds:ADM, bds:RDF ;
+                               sh:select    "\n        select distinct $this\n        where {\n            ?s adm:adminAbout $this ; bdo:isRoot true .\n            filter not exists { $this rdf:type bdo:Person . } .\n        }\t  \n      "
                              ] ;
-        sh:targetSubjectsOf  bdo:personName .
+        sh:targetObjectsOf  adm:adminAbout .
 
 bds:CheckGenderClass  a     sh:NodeShape ;
         rdfs:label          "Check Gender Class Shape"@en ;
@@ -368,6 +368,14 @@ bds:propertyShapeType
         rdfs:label       "node shape type"@en ;
         rdfs:range       bds:ShapeType ;
         skos:definition  "type of a node shape to discriminate among fact shapes, internal shapes, and so on"@en .
+
+bds:ADM
+    a sh:PrefixDeclaration ;
+    sh:declare [ 
+        sh:prefix "adm" ;
+        sh:namespace "http://purl.bdrc.io/ontology/admin/" ;
+    ] ;
+.
 
 bds:BDO  a          sh:PrefixDeclaration ;
         sh:declare  [ sh:namespace  "http://purl.bdrc.io/ontology/core/" ;
