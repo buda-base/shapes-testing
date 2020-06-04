@@ -254,7 +254,6 @@ bds:localShapeGraph  a  owl:ObjectProperty ;
 bds:EntityShape-note  a        sh:PropertyShape ;
         bds:propertyShapeType  bds:FacetShape ;
         sh:description         "Zero or more notes may be associated with an entity"@en ;
-        sh:node                bds:NoteShape ;
         sh:nodeKind            sh:IRI ;
         sh:path                bdo:note .
 
@@ -274,7 +273,9 @@ bds:EntityShape-skos_prefLabel
         a               sh:PropertyShape ;
         sh:datatype     rdf:langString ;
         sh:description  "require unique language from among the listed choices"@en ;
-        sh:languageIn   ( "en" "zh" "bo" "bo-x-ewts" ) ;
+  sh:languageIn (
+      "en" "zh" "bo" "bo-x-ewts" "km-x-femc" "km" "fr" "km-x-bdrc" 
+    ) ;
         sh:minCount     1 ;
         sh:name         "pref label"@en ;
         sh:order        "1"^^xsd:decimal ;

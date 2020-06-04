@@ -20,7 +20,7 @@ public class ShaclName_validateGraphJS03 {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String ONT_GRAPH = "http://purl.bdrc.io/graph/ontologySchema.ttl";
     static final String SHAPES = "PersonLocalShapes_ALL04.ttl";
-    static final String DATA = "P707.ttl";
+    static final String DATA = "P707_errs01.ttl";
     
     static ShaclValidator sv;
     static Graph ontGraph;
