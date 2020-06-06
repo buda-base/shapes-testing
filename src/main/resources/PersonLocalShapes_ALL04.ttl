@@ -41,7 +41,6 @@ bds:CheckPersonNameClass
 
 bds:PersonShape-personName
         a               sh:PropertyShape ;
-        sh:class        bdo:PersonName ;
         sh:description  "this Person may have one or more names."@en ;
         sh:message      "There must be at least one :personName object and each must be an IRI - no blank nodes"@en ;
         sh:minCount     1 ;
