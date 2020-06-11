@@ -1,5 +1,6 @@
 
 import java.io.FileWriter;
+import java.util.Iterator;
 
 import org.apache.jena.graph.Graph;
 import org.apache.jena.ontology.OntDocumentManager;
@@ -10,9 +11,9 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OntTestLoading3 {
+public class OntTestLoading4 {
 
-    public static Logger logger = LoggerFactory.getLogger(OntTestLoading3.class);
+    public static Logger logger = LoggerFactory.getLogger(OntTestLoading4.class);
 
     private static final String ONT_POLICY = "https://raw.githubusercontent.com/buda-base/editor-templates/master/ont-policy.rdf";
     private static final String OUT = "/Users/chris/BUDA/TEST_OUTPUT/";
@@ -37,6 +38,27 @@ public class OntTestLoading3 {
         }        
     }
     
+    private static void doAll(String name) {
+        logger.info("processing ALL from {} imports {}", name);
+
+        odm.setProcessImports(true);
+        odm.setCacheModels(true);
+
+        Iterator<String> allItr = odm.listDocuments();
+        Model allModel = ModelFactory.createDefaultModel();
+        while (allItr.hasNext()) {
+            String uri = allItr.next();
+            Model m = odm.getOntology(uri, oms);
+            logger.info("got model of size {} for uri {}", (m != null ? m.size() : 0), uri);
+            if (m != null) {
+                allModel.add(m);
+            }
+        }
+
+        System.out.println("\n\ndoAll("+name+").getModelSize() == "+allModel.size());
+        writeTtl(allModel, name);
+    }
+    
     private static void doTest(String ontUri, boolean processImports, String graphLocalName) {
         logger.info("processing {} imports {}", graphLocalName, processImports);
         
@@ -57,14 +79,11 @@ public class OntTestLoading3 {
     }
     
     public static void main(String[] args){
-
-        initOdm();        
-        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL05");
-
+        
         initOdm();
-        doTest(PERSON_SHAPES, true, "PersonShapes_ALL05");
-
-//        initOdm();
-//        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL05");
+        doAll("ALL_SHAPES07");
+        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL07");
+        doTest(PERSON_SHAPES, true, "PersonShapes_ALL07");
+//        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL07");
     }
 }
