@@ -27,8 +27,11 @@ public class OntTestLoading4 {
     private static final String PERSON_LOCAL_SHAPES = "http://purl.bdrc.io/shapes/core/PersonLocalShapes/";
     private static final String PERSON_UI_SHAPES = "http://purl.bdrc.io/shapes/core/PersonUIShapes/";
     
-    private static final String ROOT = "file://Users/chris/git/owl-schema";
-    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
+//    private static final String ROOT = "file://Users/chris/git/owl-schema";
+//    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
+    
+    private static final String ROOT = "file://Users/chris/git/editor-templates";
+    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy-local.rdf";
     
     private static OntModelSpec oms;
     private static OntDocumentManager odm;
@@ -39,7 +42,7 @@ public class OntTestLoading4 {
         oms = new OntModelSpec(OntModelSpec.OWL_MEM);        
         odm = new OntDocumentManager(fm, ONT_POLICY);        
         oms.setDocumentManager(odm);
-        writeTtl(fm.getLocationMapper().toModel(), "LOCATOR_FM_LOCAL09");
+        writeTtl(fm.getLocationMapper().toModel(), "LOCATOR_SHAPES_LOCAL09");
     }    
     
     private static void writeTtl(Model m, String nm) {
@@ -93,7 +96,7 @@ public class OntTestLoading4 {
     public static void main(String[] args){
         
         initOdm();
-        doAll("ALL_ONT_09");
+        doAll("ALL_SHAPES_09");
 //        doTest(PERSON_LOCAL_SHAPES, true, "PersonLocalShapes_ALL07");
 //        doTest(PERSON_SHAPES, true, "PersonShapes_ALL07");
 //        doTest(PERSON_UI_SHAPES, true, "PersonUIShapes_ALL07");
