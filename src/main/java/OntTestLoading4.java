@@ -28,21 +28,29 @@ public class OntTestLoading4 {
     private static final String PERSON_UI_SHAPES = "http://purl.bdrc.io/shapes/core/PersonUIShapes/";
     
 //    private static final String ROOT = "file://Users/chris/git/owl-schema";
-//    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
+    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
     
-    private static final String ROOT = "file://Users/chris/git/editor-templates";
-    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy-local.rdf";
+//    private static final String ROOT = "file:///Users/chris/git/editor-templates";
+//    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy-local.rdf";
     
     private static OntModelSpec oms;
     private static OntDocumentManager odm;
     
     private static void initOdm() {
-        FileManager fm = FileManager.get().clone(); // the global FileManager
-        fm.addLocatorFile(ROOT);
+//        FileManager fm = FileManager.get().clone(); // the global FileManager
+//        fm.addLocatorFile(ROOT);
         oms = new OntModelSpec(OntModelSpec.OWL_MEM);        
-        odm = new OntDocumentManager(fm, ONT_POLICY);        
+//        odm = new OntDocumentManager(fm, ONT_POLICY);
+        odm = new OntDocumentManager(ONT_POLICY);
+        FileManager odFm = odm.getFileManager();
+        logger.info("The FileManager: {}", odFm);
+//        Iterator<Locator> locs = fm.locators();
+//        while (locs.hasNext()) {
+//            logger.info("Locator {}", locs.next());
+//        }
         oms.setDocumentManager(odm);
-        writeTtl(fm.getLocationMapper().toModel(), "LOCATOR_SHAPES_LOCAL09");
+        writeTtl(odFm.getLocationMapper().toModel(), "LOCATOR_ONT_LOCAL09");
+        System.exit(0);
     }    
     
     private static void writeTtl(Model m, String nm) {
