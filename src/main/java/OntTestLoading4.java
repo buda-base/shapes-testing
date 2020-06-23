@@ -8,6 +8,8 @@ import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.util.FileManager;
+import org.apache.jena.util.Locator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,23 +18,29 @@ public class OntTestLoading4 {
     public static Logger logger = LoggerFactory.getLogger(OntTestLoading4.class);
 
 //    private static final String ONT_POLICY = "https://raw.githubusercontent.com/buda-base/editor-templates/master/ont-policy-local.rdf";
-    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy.rdf";
+//    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy.rdf";
 //    private static final String ONT_POLICY = "/Users/chris/git/editor-templates/ont-policy-local.rdf";
 //    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy.rdf";
-//    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
+    
     private static final String OUT = "/Users/chris/BUDA/TEST_OUTPUT/";
     private static final String PERSON_SHAPES = "http://purl.bdrc.io/shapes/core/PersonShapes/";
     private static final String PERSON_LOCAL_SHAPES = "http://purl.bdrc.io/shapes/core/PersonLocalShapes/";
     private static final String PERSON_UI_SHAPES = "http://purl.bdrc.io/shapes/core/PersonUIShapes/";
     
+    private static final String ROOT = "file://Users/chris/git/owl-schema";
+    private static final String ONT_POLICY = "/Users/chris/git/owl-schema/ont-policy-local.rdf";
+    
     private static OntModelSpec oms;
     private static OntDocumentManager odm;
     
     private static void initOdm() {
+        FileManager fm = FileManager.get().clone(); // the global FileManager
+        fm.addLocatorFile(ROOT);
         oms = new OntModelSpec(OntModelSpec.OWL_MEM);        
-        odm = new OntDocumentManager(ONT_POLICY);        
+        odm = new OntDocumentManager(fm, ONT_POLICY);        
         oms.setDocumentManager(odm);
-    }
+        writeTtl(fm.getLocationMapper().toModel(), "LOCATOR_FM_LOCAL09");
+    }    
     
     private static void writeTtl(Model m, String nm) {
         try {
