@@ -87,7 +87,7 @@
           </archive>          
         </configuration>
       </plugin>
-            <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.0.0</version>
@@ -95,7 +95,7 @@
           <shadedArtifactAttached>false</shadedArtifactAttached>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <mainClass>OntTestLoading5_ONTS_RES</mainClass>
+              <mainClass>OntTestLoading5_ONTS_RES_CT</mainClass>
             </transformer>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
             <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
@@ -127,12 +127,12 @@
           </execution>
         </executions>
       </plugin>
-            <plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
         <configuration>
-          <mainClass>OntTestLoading5_ONTS_RES</mainClass>
+          <mainClass>OntTestLoading5_ONTS_RES_CT</mainClass>
         </configuration>
       </plugin>
   </plugins>
