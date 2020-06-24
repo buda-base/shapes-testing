@@ -26,7 +26,7 @@ public class OntTestLoading5_ONTS_RES {
         odm = new OntDocumentManager(ONT_POLICY);
         oms.setDocumentManager(odm);
         FileManager odFm = odm.getFileManager();
-        writeTtl(odFm.getLocationMapper().toModel(), "LOCATOR_SHAPES_LOCAL_05");
+        writeTtl(odFm.getLocationMapper().toModel(), "LOCATOR_ONT_RES_05");
     }    
     
     private static void writeTtl(Model m, String nm) {
@@ -64,6 +64,6 @@ public class OntTestLoading5_ONTS_RES {
     public static void main(String[] args){
         
         initOdm();
-        doAll("ALL_SHAPES_LOCAL_05");
+        doAll("ALL_ONTS_RES_05");
     }
 }
