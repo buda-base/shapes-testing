@@ -13,7 +13,7 @@ public class OntTestLoading6_LOCAL {
 
     static Model TEST_MOD = null;
 
-    static String ONT_POLICIES = "ont-policy.rdf";
+    static String ONT_POLICIES = "owl-schema/ont-policy.rdf";
 
     public OntTestLoading6_LOCAL() {
         TEST_MOD = ModelFactory.createDefaultModel();
