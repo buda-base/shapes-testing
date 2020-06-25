@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jena.version>3.14.0</jena.version>
+		<jena.version>3.15.0</jena.version>
 		<version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
 	</properties>
 	<dependencies>
@@ -70,8 +70,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
         <configuration>
-          <mainClass>io.bdrc.gittodbs.GitToDB</mainClass>
-          <cleanupDaemonThreads>false</cleanupDaemonThreads>
+          <mainClass>OntTestLoading5_ONTS_RES_CT</mainClass>
         </configuration>
       </plugin>
       <plugin>
@@ -126,14 +125,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <configuration>
-          <mainClass>OntTestLoading5_ONTS_RES_CT</mainClass>
-        </configuration>
       </plugin>
   </plugins>
 </build>
