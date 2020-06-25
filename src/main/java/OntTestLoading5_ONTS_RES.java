@@ -60,12 +60,10 @@ public class OntTestLoading5_ONTS_RES {
         Model allModel = null;
         InputStream in = null;
         for (String uri : map.keySet()) {
-            // String uri = allItr.next();
             logger.info("URI {}", uri);
             if (map.keySet().contains(uri)) {
                 Model m = ModelFactory.createDefaultModel();
                 in = OntTestLoading5_ONTS_RES.class.getClassLoader().getResourceAsStream(getJarLoc(uri));
-                System.out.println("jarLOC >>" + getJarLoc(uri) + " in:" + in);
                 m.read(in, "", "TTL");
                 logger.info("got model of size {} for uri {}", (m != null ? m.size() : 0), uri);
                 if (m != null) {
