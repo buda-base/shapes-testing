@@ -1,0 +1,538 @@
+@prefix :      <http://purl.bdrc.io/ontology/core/> .
+@prefix bdan:  <http://purl.bdrc.io/annotation/> .
+@prefix aut:   <http://purl.bdrc.io/ontology/ext/auth/> .
+@prefix bf:    <http://id.loc.gov/ontologies/bibframe/> .
+@prefix tbr:   <http://purl.bdrc.io/ontology/toberemoved/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rsh:   <http://purl.bdrc.io/shacl/core/shape/> .
+@prefix bdou:  <http://purl.bdrc.io/ontology/ext/user/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bdac:  <http://purl.bdrc.io/anncollection/> .
+@prefix wd:    <http://www.wikidata.org/entity/> .
+@prefix srcpe: <https://sakyaresearch.org/persons/> .
+@prefix oa:    <http://www.w3.org/ns/oa#> .
+@prefix mbbt:  <http://mbingenheimer.net/tools/bibls/> .
+@prefix bdgup: <http://purl.bdrc.io/graph-nc/user-private/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix dila:  <http://purl.dila.edu.tw/resource/> .
+@prefix tmp:   <http://purl.bdrc.io/ontology/tmp/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix text:  <http://jena.apache.org/text#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bdgu:  <http://purl.bdrc.io/graph-nc/user/> .
+@prefix bda:   <http://purl.bdrc.io/admindata/> .
+@prefix bdg:   <http://purl.bdrc.io/graph/> .
+@prefix srct:  <https://sakyaresearch.org/topics/> .
+@prefix ola:   <https://openlibrary.org/authors/> .
+@prefix f:     <java:io.bdrc.ldspdi.sparql.functions.> .
+@prefix srcpl: <https://sakyaresearch.org/places/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix adm:   <http://purl.bdrc.io/ontology/admin/> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix iiif2: <http://iiif.io/api/presentation/2#> .
+@prefix iiif3: <http://iiif.io/api/presentation/3#> .
+@prefix adr:   <http://purl.bdrc.io/resource-nc/auth/> .
+@prefix viaf:  <http://viaf.org/viaf/> .
+@prefix eftr:  <http://purl.84000.co/resource/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix bdu:   <http://purl.bdrc.io/resource-nc/user/> .
+@prefix as:    <http://www.w3.org/ns/activitystreams#> .
+@prefix srcd:  <https://sakyaresearch.org/deities/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ldp:   <http://www.w3.org/ns/ldp#> .
+@prefix srcs:  <https://sakyaresearch.org/sources/> .
+@prefix srcl:  <https://sakyaresearch.org/literary_forms/> .
+
+bds:ContentLocationShape-contentLocationEndVolumeName
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationEndVolumeName Shape"@en ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, ending volume name."@en ;
+        sh:path      bdo:contentLocationEndVolumeName .
+
+bds:CheckPersonEventClass
+        a                   sh:NodeShape ;
+        rdfs:label          "Check PersonEvent Class Shape"@en ;
+        sh:message          ":personEvent object must be subClassOf* bdo:PersonEvent" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDFS , bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:PersonEvent . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personEvent .
+
+bds:identifierPrefix  a  owl:DatatypeProperty ;
+        rdfs:domain      rdfs:Resource ;
+        rdfs:label       "prefix for resource id"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "prefix to use when generating identifier for a resource"@en .
+
+bds:CheckGenderClass  a     sh:NodeShape ;
+        rdfs:label          "Check Gender Class Shape"@en ;
+        sh:message          ":personGender object must be instance of bdo:Gender" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDFS , bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type bdo:Gender . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personGender .
+
+bds:SortDirection  a  owl:Class .
+
+bds:ShapeType  a  owl:Class .
+
+bds:ExternalShape  a     bds:ShapeType ;
+        rdfs:label       "node shape refers to resource external to focus node graph"@en ;
+        skos:definition  "this shape indicates external resource that is not contained in the focus node graph"@en .
+
+bds:CheckRoleClass  a       sh:NodeShape ;
+        rdfs:label          "Check Role Class Shape"@en ;
+        sh:message          ":personEventRole object must be subClassOf* bdo:Role" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDFS , bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:Role . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personEventRole .
+
+bds:PersonShape-personName
+        a            sh:PropertyShape ;
+        sh:message   "There must be at least one :personName object and each must be an IRI - no blank nodes"@en ;
+        sh:minCount  1 ;
+        sh:nodeKind  sh:IRI ;
+        sh:path      bdo:personName .
+
+bds:ContentLocationShape-contentLocationVolume
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationVolume Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, starting volume number."@en ;
+        sh:path      bdo:contentLocationVolume .
+
+bds:increment  a         owl:DatatypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "increment by"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "an amount to increment the value of the sh:path property by"@en .
+
+bds:ContentLocationShape-contentLocationEndLine
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationEndLine Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, ending line."@en ;
+        sh:path      bdo:contentLocationEndLine .
+
+bds:ContentLocationShape-contentLocationEndPage
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationEndPage Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, ending page."@en ;
+        sh:path      bdo:contentLocationEndPage .
+
+bds:ContentLocationShape-contentLocationPhrase
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationPhrase Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, starting phrase number."@en ;
+        sh:path      bdo:contentLocationPhrase .
+
+bds:InternalShape  a     bds:ShapeType ;
+        rdfs:label       "node shape is internal"@en ;
+        skos:definition  "this shape applies to internal resources such as Volumes in an Imagegroup"@en .
+
+bds:EntityShape-skos_prefLabel
+        a              sh:PropertyShape ;
+        sh:datatype    rdf:langString ;
+        sh:languageIn  ( "en" "zh" "bo" "bo-x-ewts" "km-x-femc" "km" "fr" "km-x-bdrc" ) ;
+        sh:message     "each Entity resource must have at least one skos:prefLabel and each must be a unique language"@en ;
+        sh:minCount    1 ;
+        sh:path        skos:prefLabel ;
+        sh:uniqueLang  true .
+
+bds:ContentLocationShape
+        a                     sh:NodeShape ;
+        rdfs:label            "ContentLocation Shape"@en ;
+        bds:identifierPrefix  "CL" ;
+        sh:property           bds:ContentLocationShape-contentLocationEndPhrase , bds:ContentLocationShape-contentLocationEndVolumeName , bds:ContentLocationShape-contentLocationEndPage , bds:ContentLocationShape-contentLocationVolumeName , bds:ContentLocationShape-contentLocationSeqNum , bds:ContentLocationShape-contentLocationSide , bds:ContentLocationShape-contentLocationEndSide , bds:ContentLocationShape-contentLocationEndLine , bds:ContentLocationShape-contentLocationByFolio , bds:ContentLocationShape-contentLocationStatement , bds:ContentLocationShape-contentLocationVolume , bds:ContentLocationShape-contentLocationEndVolume , bds:ContentLocationShape-contentPagination , bds:ContentLocationShape-contentLocationPage , bds:ContentLocationShape-contentLocationStatementCBETA , bds:ContentLocationShape-contentLocationLine , bds:ContentLocationShape-contentLocationPhrase ;
+        sh:targetClass        bdo:ContentLocation .
+
+bds:PersonNameShape  a     sh:NodeShape ;
+        rdfs:label         "Person Name Shape"@en ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:property        bds:PersonNameShape-personNameLabel ;
+        sh:targetClass     bdo:PersonName .
+
+bds:RDFS  a         sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://www.w3.org/2000/01/rdf-schema#" ;
+                      sh:prefix     "rdfs"
+                    ] .
+
+bds:SortAscending  a     bds:SortDirection ;
+        rdfs:label       "sort ascending"@en ;
+        skos:definition  "items should be sorted in ascending order"@en .
+
+bds:EventShape-onOrAbout
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "there must be at most one :onOrAbout, and it must be an xsd:string"@en ;
+        sh:path      bdo:onOrAbout .
+
+bds:EventShape-notAfter
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:message   "there must be at most one :notAfter, and it must be an xsd:gYear"@en ;
+        sh:path      bdo:notAfter .
+
+bds:BDO  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://purl.bdrc.io/ontology/core/" ;
+                      sh:prefix     "bdo"
+                    ] .
+
+bds:RDF  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+                      sh:prefix     "rdf"
+                    ] .
+
+bds:ContentLocationShape-contentLocationVolumeName
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationVolumeName Shape"@en ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, starting volume name."@en ;
+        sh:path      bdo:contentLocationVolumeName .
+
+bds:PersonEventShape  a    sh:NodeShape ;
+        rdfs:label         "Person Event Shape"@en ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:property        bds:PersonEventShape-personEventRole ;
+        sh:targetClass     bdo:PersonEvent .
+
+bds:EventShape-notBefore
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:message   "there must be at most one :notBefore, and it must be an xsd:gYear"@en ;
+        sh:path      bdo:notBefore .
+
+bdo:Person  bds:localShapeGraph  bdg:PersonLocalShapes .
+
+bds:localShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:ContentLocationShape-contentLocationEndPhrase
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationEndPhrase Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, ending phrase number."@en ;
+        sh:path      bdo:contentLocationEndPhrase .
+
+bds:CheckPersonClass  a     sh:NodeShape ;
+        rdfs:label          "Check Person Class Shape"@en ;
+        sh:message          "focusNode must be a bdo:Person" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDF , bds:BDO , bds:ADM ;
+                              sh:select    "\n        select distinct $this\n        where {\n            ?s adm:adminAbout $this ;\n               bdo:isRoot true .\n            filter not exists { $this rdf:type bdo:Person . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  adm:adminAbout .
+
+bds:SortDescending  a    bds:SortDirection ;
+        rdfs:label       "sort descending"@en ;
+        skos:definition  "items should be sorted in descending order"@en .
+
+bds:LabelShape  a       sh:NodeShape ;
+        rdfs:label      "Label Shape"@en ;
+        sh:property     bds:LabelShape-hasTranslation ;
+        sh:targetClass  bdo:Label .
+
+bds:EventShape  a             sh:NodeShape ;
+        rdfs:label            "Event Shape"@en ;
+        bds:identifierPrefix  "EV" ;
+        bds:nodeShapeType     bds:FacetShape ;
+        sh:property           bds:EventShape-onOrAbout , bds:EventShape-onDate , bds:EventShape-notAfter , bds:EventShape-onYear , bds:EventShape-notBefore , bds:EventShape-eventText ;
+        sh:targetClass        bdo:Event .
+
+bds:CheckContentLocationClass
+        a                   sh:NodeShape ;
+        rdfs:label          "Check ContentLocation Class Shape"@en ;
+        sh:message          "object if :contentLocation must be a bdo:ContentLocation" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:ContentLocation . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:contentLocation .
+
+bds:NoteShape-noteText
+        a            sh:PropertyShape ;
+        sh:datatype  rdf:langString ;
+        sh:maxCount  1 ;
+        sh:message   "a note may have at most one :noteText"@en ;
+        sh:path      bdo:noteText .
+
+bds:PersonEventShape-personEventRole
+        a            sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:message   "At most one :personEventRole allowed"@en ;
+        sh:path      bdo:personEventRole .
+
+bds:NoteShape-contentLocation
+        a            sh:PropertyShape ;
+        sh:class     bdo:ContentLocation ;
+        sh:maxCount  1 ;
+        sh:message   "a note may have at most one :contentLocation"@en ;
+        sh:path      bdo:contentLocation .
+
+bds:CheckNoteClass  a       sh:NodeShape ;
+        rdfs:label          "Check Note Class Shape"@en ;
+        sh:message          "focusNode must be a bdo:Note" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:Note . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:note .
+
+bds:IgnoreShape  a       bds:ShapeType ;
+        rdfs:label       "node shape is ignored for editing"@en ;
+        skos:definition  "this shape indicates internal resource that is not editable"@en .
+
+bds:EntityShape  a         sh:NodeShape ;
+        bds:nodeShapeType  bds:FacetShape ;
+        sh:property        bds:EntityShape-skos_prefLabel , bds:EntityShape-note ;
+        sh:targetClass     bdo:Entity .
+
+<http://purl.bdrc.io/shapes/core/RootLocalShapes/>
+        a                owl:Ontology ;
+        owl:imports      <http://purl.bdrc.io/shapes/core/BaseShapes/> ;
+        owl:versionInfo  "Initial SHACL constraints" .
+
+bds:sortRank  a          owl:DatatypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "sort rank"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "values of the sh:path property are used to sort results before higher ranked properties."@en .
+
+bds:ContentLocationShape-contentLocationEndVolume
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationEndVolume Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, ending volume number."@en ;
+        sh:path      bdo:contentLocationEndVolume .
+
+bds:PersonNameShape-personNameLabel
+        a            sh:PropertyShape ;
+        sh:datatype  rdf:langString ;
+        sh:maxCount  1 ;
+        sh:message   "A PersonName must have exactly one rdfs:label"@en ;
+        sh:minCount  1 ;
+        sh:path      rdfs:label .
+
+bds:NoteShape-contentLocationStatement
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationStatement Shape"@en ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "a note may have at most one :contentLocationStatement"@en ;
+        sh:path      bdo:contentLocationStatement .
+
+bds:propertyShapeType
+        a                owl:ObjectProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "node shape type"@en ;
+        rdfs:range       bds:ShapeType ;
+        skos:definition  "type of a node shape to discriminate among fact shapes, internal shapes, and so on"@en .
+
+bds:CheckPersonNameClass
+        a                   sh:NodeShape ;
+        rdfs:label          "Check PersonName Class Shape"@en ;
+        sh:message          ":personName object must be subClassOf* bdo:PersonName" ;
+        sh:sparql           [ a            sh:SPARQLConstraint ;
+                              sh:prefixes  bds:RDFS , bds:RDF , bds:BDO ;
+                              sh:select    "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:PersonName . } .\n        }\t  \n      "
+                            ] ;
+        sh:targetObjectsOf  bdo:personName .
+
+bds:topShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:ADM  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://purl.bdrc.io/ontology/admin/" ;
+                      sh:prefix     "adm"
+                    ] .
+
+bds:ContentLocationShape-contentLocationSide
+        a             sh:PropertyShape ;
+        rdfs:comment  "should include constraint that only makes sense when contentLocationByFolio true"@en ;
+        rdfs:label    "contentLocationSide Shape"@en ;
+        sh:datatype   xsd:string ;
+        sh:maxCount   1 ;
+        sh:message    "a :ContentLocation may indicate, at most one, starting side of a folio."@en ;
+        sh:path       bdo:contentLocationSide .
+
+bds:PersonShape-personEvent
+        a            sh:PropertyShape ;
+        sh:message   ":personEvent object must be an IRI - no blank nodes"@en ;
+        sh:nodeKind  sh:IRI ;
+        sh:path      bdo:personEvent .
+
+bds:NoteShape  a              sh:NodeShape ;
+        bds:identifierPrefix  "NT" ;
+        bds:nodeShapeType     bds:FacetShape ;
+        sh:property           bds:NoteShape-noteType , bds:NoteShape-noteText , bds:NoteShape-contentLocationStatementCBETA , bds:NoteShape-contentLocationStatement , bds:NoteShape-contentLocation ;
+        sh:targetClass        bdo:Note .
+
+bds:PersonShape  a            sh:NodeShape ;
+        rdfs:label            "Person Shape"@en ;
+        bds:identifierPrefix  "P" ;
+        sh:property           bds:PersonShape-personName , bds:PersonShape-personGender , bds:PersonShape-personEvent ;
+        sh:targetClass        bdo:Person .
+
+bds:ContentLocationShape-contentLocationByFolio
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationByFolio Shape"@en ;
+        sh:datatype  xsd:boolean ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most once, that units are folios. The default is pages."@en ;
+        sh:path      bdo:contentLocationByFolio .
+
+bds:BDR  a          sh:PrefixDeclaration ;
+        sh:declare  [ sh:namespace  "http://purl.bdrc.io/resource/" ;
+                      sh:prefix     "bdr"
+                    ] .
+
+bds:EventShape-onDate
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:date ;
+        sh:maxCount  1 ;
+        sh:message   "there must be at most one :onDate, and it must be an xsd:date"@en ;
+        sh:path      bdo:onDate .
+
+bds:ContentLocationShape-contentLocationSeqNum
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationSeqNum Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, sequence number."@en ;
+        sh:path      bdo:contentLocationSeqNum .
+
+<http://purl.bdrc.io/shapes/core/EventLocalShapes/>
+        a                owl:Ontology ;
+        owl:imports      <http://purl.bdrc.io/shapes/core/RootLocalShapes/> ;
+        owl:versionInfo  "Initial SHACL constraints for Events and its subclasses" .
+
+<http://purl.bdrc.io/shapes/core/PersonLocalShapes/>
+        a                owl:Ontology ;
+        owl:imports      <http://purl.bdrc.io/shapes/core/EventLocalShapes/> ;
+        owl:versionInfo  "SHACL constraints for a internal elements of a Person graph" .
+
+<http://purl.bdrc.io/shapes/core/BaseShapes/>
+        a                owl:Ontology ;
+        owl:versionInfo  "Buda extension to shacl vocabulary" .
+
+bds:nodeShapeType  a     owl:ObjectProperty ;
+        rdfs:domain      sh:NodeShape ;
+        rdfs:label       "node shape type"@en ;
+        rdfs:range       bds:ShapeType ;
+        skos:definition  "type of a node shape to discriminate among fact shapes, internal shapes, and so on"@en .
+
+bds:uiShapeGraph  a  owl:ObjectProperty ;
+        rdfs:domain  bdo:Entity ;
+        rdfs:range   xsd:anyURI .
+
+bds:EventShape-onYear
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:gYear ;
+        sh:maxCount  1 ;
+        sh:message   "there must be at most one :onYear, and it must be an xsd:gYear"@en ;
+        sh:path      bdo:onYear .
+
+bds:ContentLocationShape-contentLocationEndSide
+        a             sh:PropertyShape ;
+        rdfs:comment  "should include constraint that only makes sense when contentLocationByFolio true"@en ;
+        rdfs:label    "contentLocationEndSide Shape"@en ;
+        sh:datatype   xsd:string ;
+        sh:maxCount   1 ;
+        sh:message    "a :ContentLocation may indicate, at most one, ending side."@en ;
+        sh:path       bdo:contentLocationEndSide .
+
+bds:EntityShape-note  a        sh:PropertyShape ;
+        bds:propertyShapeType  bds:FacetShape ;
+        sh:message             "a note must be an IRI, no blank nodes"@en ;
+        sh:nodeKind            sh:IRI ;
+        sh:path                bdo:note .
+
+bds:LabelShape-hasTranslation
+        a           sh:PropertyShape ;
+        sh:class    bdo:Label ;
+        sh:message  "a label may refer to other :Labels that are translations of this label"@en ;
+        sh:path     bdo:hasTranslation .
+
+bds:sortDirection  a     owl:ObjecttypeProperty ;
+        rdfs:domain      sh:PropertyShape ;
+        rdfs:label       "sort direction"@en ;
+        rdfs:range       bds:SortDirection ;
+        skos:definition  "values of the sh:path property are sorted in the specified direction."@en .
+
+bds:ContentLocationShape-contentLocationLine
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationLine Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, starting line number."@en ;
+        sh:path      bdo:contentLocationLine .
+
+bds:ContentLocationShape-contentLocationPage
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationPage Shape"@en ;
+        sh:datatype  xsd:integer ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, starting page number."@en ;
+        sh:path      bdo:contentLocationPage .
+
+bds:NoteShape-noteType
+        a            sh:PropertyShape ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "a note may have at most one :noteType"@en ;
+        sh:path      bdo:noteType .
+
+bds:ContentLocationShape-contentPagination
+        a            sh:PropertyShape ;
+        rdfs:label   "contentPagination Shape"@en ;
+        sh:class     bdo:PaginationType ;
+        sh:maxCount  1 ;
+        sh:message   "a :ContentLocation may indicate, at most one, pagination type."@en ;
+        sh:path      bdo:contentPagination .
+
+bds:EventShape-eventText
+        a            sh:PropertyShape ;
+        sh:datatype  rdf:langString ;
+        sh:message   ":eventText must be an rdf:langString"@en ;
+        sh:path      bdo:eventText .
+
+bds:PersonShape-personGender
+        a            sh:PropertyShape ;
+        sh:maxCount  1 ;
+        sh:message   "At most one bdo:personGender allowed"@en ;
+        sh:path      bdo:personGender .
+
+bds:NoteShape-contentLocationStatementCBETA
+        a            sh:PropertyShape ;
+        rdfs:label   "contentLocationStatementCBETA Shape"@en ;
+        sh:datatype  xsd:string ;
+        sh:maxCount  1 ;
+        sh:message   "a note may have at most one :contentLocationStatementCBETA"@en ;
+        sh:path      bdo:contentLocationStatementCBETA .
+
+bds:FacetShape  a        bds:ShapeType ;
+        rdfs:label       "node shape is a facet"@en ;
+        skos:definition  "this shape applies to a resource contained in the graph of root Resource that is a facet of the containing resource"@en .
