@@ -4,9 +4,12 @@ import org.apache.jena.graph.Graph;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.shacl.Shapes;
+import org.topbraid.shacl.engine.ShapesGraph;
+import org.topbraid.shacl.validation.ValidationEngine;
+import org.topbraid.shacl.validation.ValidationEngineConfiguration;
+import org.topbraid.shacl.validation.ValidationUtil;
 
-public class ShaclParse_JS01 {
+public class ShaclParse_TQ01 {
 
     static final String OUT = "/Users/chris/BUDA/TEST_OUTPUT/";
     static final String BDG = "http://purl.bdrc.io/graph/";
@@ -16,9 +19,11 @@ public class ShaclParse_JS01 {
         Model shapesModel = ModelFactory.createModelForGraph(shapesGraph);
         writeTtl(shapesModel, graphName+suffix);
         try {
+            Model dataModel = ModelFactory.createDefaultModel();
+            ValidationEngineConfiguration config = new ValidationEngineConfiguration().setValidateShapes(true);
             System.out.println("===> Parsing " + graphName + ", with " + shapesModel.size() + " stmts");
-            Shapes shapes = Shapes.parse(shapesGraph); 
-            System.out.println("===> SUCCESS Parsing " + graphName + ", with " + shapes.getGraph().size() + " stmts");
+            ValidationEngine engine = ValidationUtil.createValidationEngine(dataModel, shapesModel, config);
+            System.out.println("===> SUCCESS Parsing " + graphName + ", with " + engine.getShapesModel().size() + " stmts");
         } catch (Exception ex) {
             System.out.println("===> FAILED to Parse " + graphName);
             ex.printStackTrace();
@@ -34,7 +39,7 @@ public class ShaclParse_JS01 {
     }
     
     public static void main(String ...args) {
-        parseGraph("PersonLocalShapes", "-JS_from_buda1_001");
-        parseGraph("PersonShapes", "-JS_from_buda1_001");
+        parseGraph("PersonLocalShapes", "-TQ_from_buda1_001");
+        parseGraph("PersonShapes", "-TQ_from_buda1_001");
     }
 }
