@@ -30,9 +30,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.topbraid.shacl.validation.ValidationUtil;
 
-public class TopQ_ValidationTest {
+public class TopQ_ValidationTest_MA01 {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest_MA01.class);
 
     static Model testMod;
 
@@ -53,7 +53,7 @@ public class TopQ_ValidationTest {
         testGraph = RDFDataMgr.loadGraph(DATA);
         testModel = ModelFactory.createModelForGraph(testGraph);
 
-        shapesGraph = RDFDataMgr.loadGraph(SHAPES);
+        shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonShapes.ttl");
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
 
@@ -61,8 +61,7 @@ public class TopQ_ValidationTest {
 
         logger.info("dataModel.size() = {} ", testModel.size());
         logger.info("shapesModel.size() = {} ", shapesModel.size());
-        
-        
+
         // Perform the validation of everything, using the data model
         // also as the shapes model - you may have them separated
         Resource report = ValidationUtil.validateModel(testModel, shapesModel, true);

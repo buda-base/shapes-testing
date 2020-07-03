@@ -1,4 +1,3 @@
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,6 +16,7 @@
  * limitations under the License.
  */
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -30,11 +30,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.topbraid.shacl.validation.ValidationUtil;
 
-public class TopQ_ValidationTest {
+public class TopQ_ValidationTest_MA02 {
 
-    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest.class);
+    public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest_MA02.class);
 
     static Model testMod;
+    
+    static final String OUT = "/Users/chris/BUDA/TEST_OUTPUT/";
 
     static final String BDG = "http://purl.bdrc.io/graph/";
     static final String BDR = "http://purl.bdrc.io/resource/";
@@ -53,16 +55,24 @@ public class TopQ_ValidationTest {
         testGraph = RDFDataMgr.loadGraph(DATA);
         testModel = ModelFactory.createModelForGraph(testGraph);
 
-        shapesGraph = RDFDataMgr.loadGraph(SHAPES);
+        shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonShapes.ttl");
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
+    }
+    
+    private static void writeTtl(Model m, String nm) {
+        try {
+            m.write(new FileWriter(OUT+nm+".ttl"), "TTL");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }        
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
 
         logger.info("dataModel.size() = {} ", testModel.size());
         logger.info("shapesModel.size() = {} ", shapesModel.size());
-        
-        
+
+        writeTtl(shapesModel, "PersonShapes-from_TopQ_ValidationTest_MA02");
         // Perform the validation of everything, using the data model
         // also as the shapes model - you may have them separated
         Resource report = ValidationUtil.validateModel(testModel, shapesModel, true);
