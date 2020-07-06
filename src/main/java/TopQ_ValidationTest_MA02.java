@@ -1,3 +1,4 @@
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -35,8 +36,8 @@ public class TopQ_ValidationTest_MA02 {
     public static Logger logger = LoggerFactory.getLogger(TopQ_ValidationTest_MA02.class);
 
     static Model testMod;
-    
-    static final String OUT = "/Users/chris/BUDA/TEST_OUTPUT/";
+
+    static final String OUT = "/Users/marc/dev/shapes-testing/";
 
     static final String BDG = "http://purl.bdrc.io/graph/";
     static final String BDR = "http://purl.bdrc.io/resource/";
@@ -58,13 +59,13 @@ public class TopQ_ValidationTest_MA02 {
         shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonShapes.ttl");
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
-    
+
     private static void writeTtl(Model m, String nm) {
         try {
-            m.write(new FileWriter(OUT+nm+".ttl"), "TTL");
+            m.write(new FileWriter(OUT + nm + ".ttl"), "TTL");
         } catch (Exception ex) {
             ex.printStackTrace();
-        }        
+        }
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {

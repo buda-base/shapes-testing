@@ -33,7 +33,7 @@ import org.topbraid.shacl.validation.ValidationEngine;
 import org.topbraid.shacl.validation.ValidationEngineConfiguration;
 import org.topbraid.shacl.validation.ValidationUtil;
 
-public class TopQ_ValidateNode {
+public class TopQ_ValidateNode_MA01 {
 
     public static Logger logger = LoggerFactory.getLogger(TopQ_ValidateNode.class);
 
@@ -58,7 +58,7 @@ public class TopQ_ValidateNode {
         dataGraph = RDFDataMgr.loadGraph(DATA);
         dataModel = ModelFactory.createModelForGraph(dataGraph);
 
-        shapesGraph = RDFDataMgr.loadGraph(SHAPES);
+        shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonShapes.ttl");
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
 
