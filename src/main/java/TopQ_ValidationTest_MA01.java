@@ -40,7 +40,7 @@ public class TopQ_ValidationTest_MA01 {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_augmented1";
+    static final String DATA_VER = "_augmented5";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static Graph testGraph;
@@ -53,7 +53,7 @@ public class TopQ_ValidationTest_MA01 {
         testGraph = RDFDataMgr.loadGraph(DATA);
         testModel = ModelFactory.createModelForGraph(testGraph);
 
-        shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonShapes.ttl");
+        shapesGraph = RDFDataMgr.loadGraph("http://purl.bdrc.io/graph/PersonLocalShapes.ttl");
         shapesModel = ModelFactory.createModelForGraph(shapesGraph);
     }
 
