@@ -1,0 +1,80 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix bf:    <http://id.loc.gov/ontologies/bibframe/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix adm:   <http://purl.bdrc.io/ontology/admin/> .
+@prefix bda:   <http://purl.bdrc.io/admindata/> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+
+##
+## triples external to bdg:P707
+##
+
+##
+## from ontology/core
+##
+bdo:PersonPrimaryName
+  rdfs:subClassOf bdo:PersonName ;
+.
+bdo:PersonPrimaryTitle
+  rdfs:subClassOf bdo:PersonName ;
+.
+bdo:PersonGterStonTitle
+  rdfs:subClassOf bdo:PersonName ;
+.
+
+bdr:GenderMale
+  a bdo:Gender ;
+.
+
+##
+## minimal P705
+##
+bdr:P705  
+  a                  bdo:Person ;
+  bdo:personGender   bdr:GenderMale ;
+  bdo:personName     bdr:NM0895CB6787E8AC6E ;
+.
+
+bdr:NM0895CB6787E8AC6E
+        a           bdo:PersonPrimaryTitle ;
+        rdfs:label  "sprul sku dri med/"@bo-x-ewts ;
+.
+
+
+##
+## P707 base
+##
+bdr:NMC2A097019ABA499F
+        a           bdo:PersonPrimaryName ;
+        rdfs:label  "dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NM2463D933BA1F9A38
+        a           bdo:PersonPrimaryTitle ;
+        rdfs:label  "bdud 'joms gter sras dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NT08B650B715F414F1
+        a             bdo:Note ;
+        bdo:noteText  "this son of bdud 'joms gling pa was an important gter ston in his own right. so far his gter chos have not been found."@en ;
+.
+
+bdr:P707  a                  bdo:Person ;
+        bdo:hasFather        bdr:P705 ;
+        bdo:hasParent        bdr:P705 ;
+        bdo:isRoot           true ;
+        bdo:kinWith          bdr:P705 ;
+        bdo:note             bdr:NT08B650B715F414F1 ;
+        bdo:personGender     bdr:GenderMale ;
+        bdo:personName       bdr:NM2463D933BA1F9A38 , bdr:NMC2A097019ABA499F ;
+        bdo:personStudentOf  bdr:P705 ;
+        skos:prefLabel       "dri med 'od zer/"@bo-x-ewts ;
+.
