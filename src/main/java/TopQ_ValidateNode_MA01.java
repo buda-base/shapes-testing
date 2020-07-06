@@ -44,6 +44,7 @@ public class TopQ_ValidateNode_MA01 {
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
     static final String DATA_VER = "_augmented2";
+    // static final String DATA_VER = "_errs01";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static final boolean validateShapes = true;

@@ -43,7 +43,8 @@ public class TopQ_ValidationTest_MA02 {
     static final String BDR = "http://purl.bdrc.io/resource/";
     static final String SHAPES = "PersonShapes_BASE.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_augmented1";
+    // static final String DATA_VER = "_augmented1";
+    static final String DATA_VER = "_errs01";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static Graph testGraph;
