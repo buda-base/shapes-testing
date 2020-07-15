@@ -1,0 +1,18 @@
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+bdr:P707  a                  bdo:Person ;
+        bdo:note             bdr:NT08B650B715F414F1 ;
+        skos:prefLabel       "dri med 'od zer/"@bo-x-ewts ;
+.
+
+bdr:NT08B650B715F414F1
+        a             bdo:Note ;
+        bdo:noteText  "this son of bdud 'joms gling pa was an important gter ston in his own right. so far his gter chos have not been found."@en ;
+.
