@@ -9,19 +9,9 @@
 
 bdr:P707  a                  bdo:Person ;
         bdo:note             bdr:NT08B650B715F414F1 ;
-        skos:prefLabel       "dri med 'od zer/"@bo-x-ewts ;
 .
 
 bdr:NT08B650B715F414F1
         a             bdo:Note ;
-        bdo:noteText  "this son of bdud 'joms gling pa was an important gter ston in his own right. so far his gter chos have not been found."@en ;
-        bdo:contentLocation bdr:CLC348F95055AFA66C ;
-.
-
-bdr:CLC348F95055AFA66C
-        a                            bdo:ContentLocation ;
-        bdo:contentLocationEndPage   40 ;
-        bdo:contentLocationInstance  bdr:MW20548 ;
-        bdo:contentLocationPage      13 ;
-        bdo:contentLocationVolume    2 ;
+        bdo:noteText  "some note text"@en ;
 .

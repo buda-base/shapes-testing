@@ -1,0 +1,16 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+bds:PersonShape
+   a               sh:NodeShape ;
+   sh:property     bds:PersonShape-note ;
+   sh:targetClass  bdo:Note ;
+.

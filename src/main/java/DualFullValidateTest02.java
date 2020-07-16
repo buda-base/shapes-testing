@@ -14,9 +14,10 @@ public class DualFullValidateTest02 {
 
     public static Logger logger = LoggerFactory.getLogger(DualFullValidateTest02.class);
 
-    static final String SHAPES = "http://purl.bdrc.io/graph/RootLocalShapes.ttl";
+//    static final String SHAPES = "http://purl.bdrc.io/graph/RootLocalShapes.ttl";
+    static final String SHAPES = "RLS_MIN03.ttl";
     static final String REZ_NM = "P707";
-    static final String DATA_VER = "_CL01";
+    static final String DATA_VER = "_CL02";
     static final String DATA = REZ_NM + DATA_VER + ".ttl";
 
     static Graph testGraph;

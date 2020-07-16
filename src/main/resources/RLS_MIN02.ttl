@@ -1,0 +1,123 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dash:  <http://datashapes.org/dash#> .
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+bds:BDO  a       sh:PrefixDeclaration ;
+   sh:declare    [ sh:namespace  "http://purl.bdrc.io/ontology/core/" ;
+                   sh:prefix     "bdo"
+                 ] ;
+.
+bds:RDF  a       sh:PrefixDeclaration ;
+   sh:declare    [ sh:namespace  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+                   sh:prefix     "rdf"
+                 ] ;
+.
+bds:RDFS  a      sh:PrefixDeclaration ;
+   sh:declare    [ sh:namespace  "http://www.w3.org/2000/01/rdf-schema#" ;
+                   sh:prefix     "rdfs"
+                 ] ;
+.
+bds:CheckContentLocationClass
+   a             sh:NodeShape ;
+   rdfs:label    "Check ContentLocation Class Shape"@en ;
+   sh:message    "object if :contentLocation must be a bdo:ContentLocation" ;
+   sh:sparql     [ a             sh:SPARQLConstraint ;
+                   sh:prefixes   bds:BDO , bds:RDF , bds:RDFS ;
+                   sh:select     "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:ContentLocation . } .\n        }\t  \n      "
+                 ] ;
+   sh:targetObjectsOf  bdo:contentLocation ;
+.
+bds:CheckNoteClass  a  sh:NodeShape ;
+   rdfs:label    "Check Note Class Shape"@en ;
+   sh:message    "focusNode must be a bdo:Note" ;
+   sh:sparql     [ a             sh:SPARQLConstraint ;
+                   sh:prefixes   bds:BDO , bds:RDF , bds:RDFS ;
+                   sh:select     "\n        select distinct $this\n        where {\n            filter not exists { $this rdf:type/rdfs:subClassOf* bdo:Note . } .\n        }\t  \n      "
+                 ] ;
+   sh:targetObjectsOf  bdo:note ;
+.
+bds:ContentLocationShape
+   a             sh:NodeShape ;
+   rdfs:label    "ContentLocation Shape"@en ;
+   sh:property   
+      bds:ContentLocationShape-contentLocationEndPage ,
+      bds:ContentLocationShape-contentLocationPage ,
+      bds:ContentLocationShape-contentLocationStatementCBETA ,
+      bds:ContentLocationShape-contentLocationVolume ;
+   sh:targetClass  bdo:ContentLocation ;
+.
+bds:ContentLocationShape-contentLocationEndPage
+   a             sh:PropertyShape ;
+   rdfs:label    "contentLocationEndPage Shape"@en ;
+   sh:datatype   xsd:integer ;
+   sh:maxCount   1 ;
+   sh:message    "a :ContentLocation may indicate, at most one, ending page."@en ;
+   sh:path       bdo:contentLocationEndPage ;
+.
+bds:ContentLocationShape-contentLocationPage
+   a             sh:PropertyShape ;
+   rdfs:label    "contentLocationPage Shape"@en ;
+   sh:datatype   xsd:integer ;
+   sh:maxCount   1 ;
+   sh:message    "a :ContentLocation may indicate, at most one, starting page number."@en ;
+   sh:path       bdo:contentLocationPage ;
+.
+bds:ContentLocationShape-contentLocationVolume
+   a             sh:PropertyShape ;
+   rdfs:label    "contentLocationVolume Shape"@en ;
+   sh:datatype   xsd:integer ;
+   sh:maxCount   1 ;
+   sh:message    "a :ContentLocation may indicate, at most one, starting volume number."@en ;
+   sh:path       bdo:contentLocationVolume ;
+.
+bds:EntityShape  a  sh:NodeShape ;
+   bds:nodeShapeType  bds:FacetShape ;
+   sh:property   
+      bds:EntityShape-note , 
+      bds:EntityShape-skos_prefLabel ;
+   sh:targetClass  bdo:Entity ;
+.
+bds:EntityShape-note  a  sh:PropertyShape ;
+   bds:propertyShapeType  bds:FacetShape ;
+   sh:message    "a note must be an IRI, no blank nodes"@en ;
+   sh:nodeKind   sh:IRI ;
+   sh:path       bdo:note ;
+.
+bds:EntityShape-skos_prefLabel
+   a             sh:PropertyShape ;
+   sh:datatype   rdf:langString ;
+   sh:languageIn  ( "en" "zh" "bo" "bo-x-ewts" "km-x-femc" "km" "fr" "km-x-bdrc" ) ;
+   sh:message    "each Entity resource must have at least one skos:prefLabel and each must be a unique language"@en ;
+   sh:minCount   1 ;
+   sh:path       skos:prefLabel ;
+   sh:uniqueLang  true ;
+.
+bds:NoteShape  a  sh:NodeShape ;
+   bds:identifierPrefix  "NT" ;
+   bds:nodeShapeType  bds:FacetShape ;
+   sh:property   
+      bds:NoteShape-contentLocation , 
+      bds:NoteShape-noteText ;
+   sh:targetClass  bdo:Note ;
+.
+bds:NoteShape-contentLocation
+   a             sh:PropertyShape ;
+   sh:class      bdo:ContentLocation ;
+   sh:maxCount   1 ;
+   sh:message    "a note may have at most one :contentLocation"@en ;
+   sh:path       bdo:contentLocation ;
+.
+bds:NoteShape-noteText
+   a             sh:PropertyShape ;
+   sh:datatype   rdf:langString ;
+   sh:maxCount   1 ;
+   sh:message    "a note may have at most one :noteText"@en ;
+   sh:path       bdo:noteText ;
+.
