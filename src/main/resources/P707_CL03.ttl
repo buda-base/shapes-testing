@@ -1,0 +1,20 @@
+@prefix bdo:   <http://purl.bdrc.io/ontology/core/> .
+@prefix bdr:   <http://purl.bdrc.io/resource/> .
+@prefix bds:   <http://purl.bdrc.io/ontology/shapes/core/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+bds:PersonShape
+   a               sh:NodeShape ;
+   sh:property     bds:PersonShape-note ;
+   sh:targetClass  bdo:Note ;
+.
+
+bdr:P707  a        bdo:Person ;
+   bdo:note        bdr:NT08B650B715F414F1 ;
+.
+
+bdr:NT08B650B715F414F1
+   a               bdo:Note ;
+   bdo:noteText    "some note text"@en ;
+.

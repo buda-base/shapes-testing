@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jena.version>3.14.0</jena.version>
+		<jena.version>3.16.0</jena.version>
 		<version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
 	</properties>
 	<dependencies>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-shacl</artifactId>
-			<version>3.14.0</version>
+			<version>3.16.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.topbraid</groupId>
