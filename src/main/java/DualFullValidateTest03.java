@@ -29,7 +29,7 @@ public class DualFullValidateTest03 {
                 System.out.println("Jena validation is null !");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
